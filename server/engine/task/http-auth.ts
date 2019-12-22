@@ -1,5 +1,5 @@
 const AUTH_HEADERS = {
-  Basic({ username = '', password = '' }) {
+  basic({ username = '', password = '' }) {
     return {
       Authorization: 'Basic ' + Buffer.from(username + ':' + password).toString('base64')
     }
@@ -7,7 +7,7 @@ const AUTH_HEADERS = {
 }
 
 export function GET_AUTH_HEADERS(authOption) {
-  var { type } = authOption || {}
+  var { authtype: type } = authOption || {}
 
   if (!type || !AUTH_HEADERS[type]) {
     return

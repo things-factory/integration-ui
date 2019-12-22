@@ -6,7 +6,8 @@ export const taskTypesResolver = {
     var items = Object.keys(taskTypes).map(name => {
       return {
         name,
-        description: ''
+        description: '',
+        parameterSpec: (taskTypes[name] as any).parameterSpec
       }
     })
 

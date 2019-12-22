@@ -5,7 +5,7 @@ import { ScenarioEngine } from '../../../engine'
 
 export const scenariosResolver = {
   async scenarios(_: any, params: ListParam, context: any) {
-    const convertedParams = convertListParams(params)
+    const convertedParams = convertListParams(params, context.state.domain.id)
     const [items, total] = await getRepository(Scenario).findAndCount({
       ...convertedParams,
       relations: ['domain', 'steps', 'creator', 'updater']

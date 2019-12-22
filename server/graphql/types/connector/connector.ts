@@ -4,5 +4,6 @@ export const Connector = gql`
   type Connector {
     name: String
     description: String
+    parameterSpec: [PropertySpec]
   }
 `

@@ -3,7 +3,7 @@ import { Connections } from '../connections'
 // import { schema } from '@things-factory/shell/dist-server/schema'
 import gql from 'graphql-tag'
 
-async function GraphqlQuery(step, { logger }) {
+async function LocalGraphqlQuery(step, { logger }) {
   var { connection: connectionName, params: stepOptions } = step
   var { query } = stepOptions || {}
 
@@ -20,4 +20,12 @@ async function GraphqlQuery(step, { logger }) {
   logger.info(`local-graphql-query : \n${JSON.stringify(data, null, 2)}`)
 }
 
-TaskRegistry.registerTaskHandler('local-graphql-query', GraphqlQuery)
+LocalGraphqlQuery.parameterSpec = [
+  {
+    type: 'graphql',
+    name: 'query',
+    label: 'query'
+  }
+]
+
+TaskRegistry.registerTaskHandler('local-graphql-query', LocalGraphqlQuery)

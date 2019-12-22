@@ -6,7 +6,8 @@ export const connectorResolver = {
 
     return {
       name,
-      description: ''
+      description: '',
+      parameterSpec: connector.parameterSpec
     }
   }
 }

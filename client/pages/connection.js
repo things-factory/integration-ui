@@ -188,6 +188,25 @@ class Connection extends connect(store)(localize(i18next)(PageView)) {
           width: 200
         },
         {
+          type: 'parameters',
+          name: 'params',
+          header: 'params',
+          record: {
+            editable: true,
+            options: async (value, column, record, row, field) => {
+              var type = record.type
+
+              if (!type) {
+                return []
+              }
+
+              var connector = await this.fetchConnector(type)
+              return connector.parameterSpec
+            }
+          },
+          width: 100
+        },
+        {
           type: 'object',
           name: 'updater',
           header: i18next.t('field.updater'),
@@ -248,6 +267,7 @@ class Connection extends connect(store)(localize(i18next)(PageView)) {
               endpoint
               active
               status
+              params
               updater {
                 id
                 name
@@ -265,6 +285,30 @@ class Connection extends connect(store)(localize(i18next)(PageView)) {
       total: response.data.responses.total || 0,
       records: response.data.responses.items || []
     }
+  }
+
+  async fetchConnector(name) {
+    const response = await client.query({
+      query: gql`
+        query {
+          connector(${gqlBuilder.buildArgs({
+            name
+          })}) {
+            name
+            description
+            parameterSpec {
+              type
+              name
+              label
+              placeholder
+              property
+            }
+          }
+        }
+      `
+    })
+
+    return response.data.connector
   }
 
   _conditionParser() {

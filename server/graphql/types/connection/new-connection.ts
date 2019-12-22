@@ -6,5 +6,6 @@ export const NewConnection = gql`
     description: String
     type: String
     endpoint: String
+    params: String
   }
 `

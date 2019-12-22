@@ -8,4 +8,12 @@ async function Publish(step, { logger, publish }) {
   publish(message)
 }
 
+Publish.parameterSpec = [
+  {
+    type: 'string',
+    name: 'message',
+    label: 'message'
+  }
+]
+
 TaskRegistry.registerTaskHandler('publish', Publish)

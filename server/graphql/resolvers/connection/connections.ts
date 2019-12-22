@@ -6,10 +6,10 @@ import { Connections } from '../../../engine'
 
 export const connectionsResolver = {
   async connections(_: any, params: ListParam, context: any) {
-    const convertedParams = convertListParams(params)
+    const convertedParams = convertListParams(params, context.state.domain.id)
     const [items, total] = await getRepository(Connection).findAndCount({
       ...convertedParams,
-      relations: ['domain', 'creator', 'updater']
+      relations: ['domain', 'creator', 'updater'],
     })
 
     items.forEach(conn => {

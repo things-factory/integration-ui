@@ -3,7 +3,7 @@ import { Connections } from '../connections'
 // import { schema } from '@things-factory/shell/dist-server/schema'
 import gql from 'graphql-tag'
 
-async function GraphqlMutate(step, { logger }) {
+async function LocalGraphqlMutate(step, { logger }) {
   var { connection: connectionName, params: stepOptions } = step
   var { mutation } = stepOptions || {}
 
@@ -20,4 +20,12 @@ async function GraphqlMutate(step, { logger }) {
   logger.info(`local-graphql-mutate : \n${JSON.stringify(data, null, 2)}`)
 }
 
-TaskRegistry.registerTaskHandler('local-graphql-mutate', GraphqlMutate)
+LocalGraphqlMutate.parameterSpec = [
+  {
+    type: 'graphql',
+    name: 'mutation',
+    label: 'mutation'
+  }
+]
+
+TaskRegistry.registerTaskHandler('local-graphql-mutate', LocalGraphqlMutate)

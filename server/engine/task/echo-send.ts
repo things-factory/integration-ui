@@ -17,4 +17,12 @@ async function EchoSend(step, { logger }) {
   logger.info(`echo-send : '${message}'`)
 }
 
+EchoSend.parameterSpec = [
+  {
+    type: 'string',
+    name: 'message',
+    label: 'message'
+  }
+]
+
 TaskRegistry.registerTaskHandler('echo-send', EchoSend)

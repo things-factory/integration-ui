@@ -6,7 +6,8 @@ export const connectorsResolver = {
     var items = Object.keys(connectors).map(name => {
       return {
         name,
-        description: ''
+        description: '',
+        parameterSpec: connectors[name].parameterSpec
       }
     })
 

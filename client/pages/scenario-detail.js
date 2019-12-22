@@ -132,11 +132,21 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
           width: 160
         },
         {
-          type: 'json',
+          type: 'parameters',
           name: 'params',
           header: i18next.t('field.params'),
           record: {
-            editable: true
+            editable: true,
+            options: async (value, column, record, row, field) => {
+              var task = record.task
+
+              if (!task) {
+                return []
+              }
+
+              var taskType = await this.fetchTaskType(task)
+              return taskType.parameterSpec
+            }
           },
           width: 200
         }
@@ -182,6 +192,30 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
     }
   }
 
+  async fetchTaskType(name) {
+    const response = await client.query({
+      query: gql`
+        query {
+          taskType(${gqlBuilder.buildArgs({
+            name
+          })}) {
+            name
+            description
+            parameterSpec {
+              type
+              name
+              label
+              placeholder
+              property
+            }
+          }
+        }
+      `
+    })
+
+    return response.data.taskType
+  }
+
   async _updateSteps() {
     let patches = this.dataGrist._data.records
     if (patches && patches.length) {
@@ -215,9 +249,13 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   }
 
   async _deleteSteps() {
-    if (confirm(i18next.t('text.sure_to_x', {
-      x: i18next.t("text.delete")
-    }))) {
+    if (
+      confirm(
+        i18next.t('text.sure_to_x', {
+          x: i18next.t('text.delete')
+        })
+      )
+    ) {
       const ids = this.dataGrist.selected.map(record => record.id)
       if (ids && ids.length > 0) {
         const response = await client.query({

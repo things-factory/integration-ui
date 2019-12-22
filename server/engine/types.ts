@@ -1,9 +1,18 @@
 import { Connection } from '../entities'
 
+export interface PropertySpec {
+  type: string
+  label: string
+  name: string
+  placeholder?: string
+  property?: any
+}
+
 export interface Connector {
   ready(connections: Connection[]): Promise<any>
   connect(connection: Connection): Promise<any>
   disconnect(name: string): Promise<any>
+  parameterSpec: PropertySpec[]
 }
 
 export interface Step {

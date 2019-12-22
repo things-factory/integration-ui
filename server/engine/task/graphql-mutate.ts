@@ -19,4 +19,12 @@ async function GraphqlMutate(step, { logger }) {
   logger.info(`graphql-mutate : \n${JSON.stringify(data, null, 2)}`)
 }
 
+GraphqlMutate.parameterSpec = [
+  {
+    type: 'graphql',
+    name: 'mutation',
+    label: 'mutation'
+  }
+]
+
 TaskRegistry.registerTaskHandler('graphql-mutate', GraphqlMutate)

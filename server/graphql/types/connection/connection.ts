@@ -10,6 +10,7 @@ export const Connection = gql`
     endpoint: String
     status: Int
     active: Boolean
+    params: String
     updater: User
     creator: User
     updatedAt: String

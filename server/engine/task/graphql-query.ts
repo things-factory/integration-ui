@@ -19,4 +19,12 @@ async function GraphqlQuery(step, { logger }) {
   logger.info(`graphql-query : \n${JSON.stringify(data, null, 2)}`)
 }
 
+GraphqlQuery.parameterSpec = [
+  {
+    type: 'graphql',
+    name: 'query',
+    label: 'query'
+  }
+]
+
 TaskRegistry.registerTaskHandler('graphql-query', GraphqlQuery)

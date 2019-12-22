@@ -4,7 +4,7 @@ import { Step } from '../../../entities'
 
 export const stepsResolver = {
   async steps(_: any, params: ListParam, context: any) {
-    const convertedParams = convertListParams(params)
+    const convertedParams = convertListParams(params, context.state.domain.id)
     const [items, total] = await getRepository(Step).findAndCount({
       ...convertedParams,
       relations: ['domain', 'scenario', 'creator', 'updater']

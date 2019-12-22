@@ -17,6 +17,7 @@ export class Connections {
     return Promise.all(
       Object.keys(Connections.connectors).map(type => {
         var connector = Connections.connectors[type]
+
         return connector.ready(CONNECTIONS.filter(connection => connection.type == type)).catch(error => {
           logger.error(error.message)
         })

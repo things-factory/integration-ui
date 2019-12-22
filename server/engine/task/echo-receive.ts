@@ -11,4 +11,6 @@ async function EchoReceive(step, { logger }) {
   logger.info(`echo-receive : '${message.toString()}'`)
 }
 
+EchoReceive.parameterSpec = []
+
 TaskRegistry.registerTaskHandler('echo-receive', EchoReceive)

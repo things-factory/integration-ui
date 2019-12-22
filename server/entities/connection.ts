@@ -46,6 +46,11 @@ export class Connection {
   })
   status: number
 
+  @Column({
+    nullable: true
+  })
+  params: string
+
   @CreateDateColumn()
   createdAt: Date
 

@@ -17,4 +17,20 @@ async function Log(step, { logger }) {
   }
 }
 
+Log.parameterSpec = [
+  {
+    type: 'string',
+    name: 'message',
+    label: 'message'
+  },
+  {
+    type: 'select',
+    name: 'level',
+    label: 'level',
+    property: {
+      options: ['info', 'warn', 'error']
+    }
+  }
+]
+
 TaskRegistry.registerTaskHandler('log', Log)

@@ -10,11 +10,43 @@ export class HttpConnector implements Connector {
   }
 
   async connect(connection) {
-    Connections.addConnection(connection.name, connection)
+    try {
+      var params = JSON.parse(connection.params)
+    } catch (e) {
+      logger.error(e)
+    }
+
+    Connections.addConnection(connection.name, {
+      ...connection,
+      params
+    })
   }
 
   async disconnect(name) {
     Connections.removeConnection(name)
+  }
+
+  get parameterSpec() {
+    return [
+      {
+        type: 'select',
+        label: 'authtype',
+        name: 'authtype',
+        property: {
+          options: ['', 'basic']
+        }
+      },
+      {
+        type: 'string',
+        label: 'username',
+        name: 'username'
+      },
+      {
+        type: 'password',
+        label: 'password',
+        name: 'password'
+      }
+    ]
   }
 }
 

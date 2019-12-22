@@ -76,6 +76,10 @@ export class GraphqlConnector implements Connector {
     client.stop()
     Connections.removeConnection(name)
   }
+
+  get parameterSpec() {
+    return []
+  }
 }
 
 Connections.registerConnector('graphql-connector', new GraphqlConnector())
