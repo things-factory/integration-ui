@@ -260,7 +260,7 @@ export class CrontabEditorPopup extends LitElement {
         <input
           id="second-input"
           type="text"
-          .value=${this.second}
+          .value=${this.second || ''}
           @input=${e => (this.second = e.currentTarget.value)}
           @focus=${e => {
             this.showTooltip({ type: 'second' })
@@ -271,7 +271,7 @@ export class CrontabEditorPopup extends LitElement {
         <input
           id="minute-input"
           type="text"
-          .value=${this.minute}
+          .value=${this.minute || ''}
           @input=${e => (this.minute = e.currentTarget.value)}
           @focus=${e => {
             this.showTooltip({ type: 'minute' })
@@ -282,7 +282,7 @@ export class CrontabEditorPopup extends LitElement {
         <input
           id="hour-input"
           type="text"
-          .value=${this.hour}
+          .value=${this.hour || ''}
           @input=${e => (this.hour = e.currentTarget.value)}
           @focus=${e => {
             this.showTooltip({ type: 'hour' })
@@ -293,7 +293,7 @@ export class CrontabEditorPopup extends LitElement {
         <input
           id="day-of-month-input"
           type="text"
-          .value=${this.dayOfMonth}
+          .value=${this.dayOfMonth || ''}
           @input=${e => (this.dayOfMonth = e.currentTarget.value)}
           @focus=${e => {
             this.showTooltip({ type: 'dayOfMonth' })
@@ -304,7 +304,7 @@ export class CrontabEditorPopup extends LitElement {
         <input
           id="month-input"
           type="text"
-          .value=${this.month}
+          .value=${this.month || ''}
           @input=${e => (this.month = e.currentTarget.value)}
           @focus=${e => {
             this.showTooltip({ type: 'month' })
@@ -315,7 +315,7 @@ export class CrontabEditorPopup extends LitElement {
         <input
           id="day-of-week-input"
           type="text"
-          .value=${this.dayOfWeek}
+          .value=${this.dayOfWeek || ''}
           @input=${e => (this.dayOfWeek = e.currentTarget.value)}
           @focus=${e => {
             this.showTooltip({ type: 'dayOfWeek' })

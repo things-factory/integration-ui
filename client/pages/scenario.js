@@ -5,6 +5,7 @@ import { client, gqlBuilder, isMobileDevice, PageView, ScrollbarStyles, store } 
 import gql from 'graphql-tag'
 import { css, html } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin'
+import moment from 'moment-timezone'
 import './scenario-detail'
 
 class Scenario extends connect(store)(localize(i18next)(PageView)) {
@@ -167,6 +168,27 @@ class Scenario extends connect(store)(localize(i18next)(PageView)) {
           width: 200
         },
         {
+          type: 'crontab',
+          name: 'schedule',
+          header: i18next.t('field.schedule'),
+          record: {
+            align: 'center',
+            editable: true
+          },
+          width: 120
+        },
+        {
+          type: 'select',
+          name: 'timezone',
+          header: i18next.t('field.timezone'),
+          record: {
+            align: 'center',
+            editable: true,
+            options: ['', ...moment.tz.names()]
+          },
+          width: 120
+        },
+        {
           type: 'checkbox',
           name: 'active',
           header: i18next.t('field.active'),
@@ -183,7 +205,7 @@ class Scenario extends connect(store)(localize(i18next)(PageView)) {
           record: {
             editable: false
           },
-          width: 180
+          width: 120
         },
         {
           type: 'datetime',
@@ -235,6 +257,8 @@ class Scenario extends connect(store)(localize(i18next)(PageView)) {
               description
               active
               status
+              schedule
+              timezone
               updater {
                 id
                 name

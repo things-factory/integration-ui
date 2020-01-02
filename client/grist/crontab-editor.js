@@ -10,27 +10,45 @@ import { i18next } from '@things-factory/i18n-base'
 export class CrontabEditor extends InputEditor {
   get editorTemplate() {
     return html`
-      <input
-        type="text"
-        .value=${this.value}
-        @focus=${e => {
-          this.showEditorPopup()
-        }}
-      />
+      <input type="text" .value=${this.value} />
     `
   }
 
-  firstUpdated() {
-    super.firstUpdated()
+  async firstUpdated() {
+    await this.updateComplete
+
+    this.shadowRoot.addEventListener('click', e => {
+      e.stopPropagation()
+
+      this.showEditorPopup()
+    })
+
+    this.showEditorPopup()
   }
 
   showEditorPopup() {
+    var change = value => {
+      this.dispatchEvent(
+        new CustomEvent('field-change', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            before: this.value,
+            after: value,
+            column: this.column,
+            record: this.record,
+            row: this.row
+          }
+        })
+      )
+    }
+
     var popup = openPopup(
       html`
         <crontab-editor-popup
           .valueString=${this.value}
           @crontab-changed=${e => {
-            this._dirtyValue = e.detail.value
+            change(e.detail.value)
             popup.close()
           }}
         ></crontab-editor-popup>
@@ -40,25 +58,7 @@ export class CrontabEditor extends InputEditor {
         title: i18next.t('title.setting schedule')
       }
     )
-
-    popup.onclosed = () => {
-      this.dispatchEvent(
-        new CustomEvent('field-change', {
-          bubbles: true,
-          composed: true,
-          detail: {
-            before: this.value,
-            after: this._dirtyValue,
-            column: this.column,
-            record: this.record,
-            row: this.row
-          }
-        })
-      )
-    }
   }
-
-  showTooltip({ type }) {}
 }
 
 window.customElements.define('crontab-editor', CrontabEditor)

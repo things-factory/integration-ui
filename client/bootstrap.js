@@ -1,42 +1,30 @@
 import '@material/mwc-icon'
-import { ADD_MORENDA } from '@things-factory/more-base'
-import { navigate, store } from '@things-factory/shell'
 import { html } from 'lit-html'
 
-import { registerEditor, registerRenderer, TextRenderer } from '@things-factory/grist-ui'
+import { navigate, store } from '@things-factory/shell'
+import { ADD_MORENDA } from '@things-factory/more-base'
+import { ADD_BOARD_EDITORS } from '@things-factory/board-ui'
+
+import { registerEditor } from '@things-factory/grist-ui'
 
 import { ConnectorSelector } from './grist/connector-selector'
 import { ConnectionSelector } from './grist/connection-selector'
 import { TaskTypeSelector } from './grist/task-type-selector'
 import { JsonGristEditor } from './grist/json-grist-editor'
 import { ParametersEditor } from './grist/parameters-editor'
+import { CrontabEditor } from './grist/crontab-editor'
+
+import { PropertyEditorHttpHeader, PropertyEditorHttpParameter } from './editors/property-editor'
 
 export default function bootstrap() {
-  registerRenderer('task-type', TextRenderer)
   registerEditor('task-type', TaskTypeSelector)
-  registerRenderer('connector', TextRenderer)
   registerEditor('connector', ConnectorSelector)
-  registerRenderer('connection', TextRenderer)
   registerEditor('connection', ConnectionSelector)
-  registerRenderer('json', TextRenderer)
   registerEditor('json', JsonGristEditor)
-  registerRenderer('parameters', TextRenderer)
   registerEditor('parameters', ParametersEditor)
+  registerEditor('crontab', CrontabEditor)
 
   /* add user profile morenda */
-  store.dispatch({
-    type: ADD_MORENDA,
-    morenda: {
-      icon: html`
-        <mwc-icon>link</mwc-icon>
-      `,
-      name: 'integration',
-      action: () => {
-        navigate('integration-setting')
-      }
-    }
-  })
-
   store.dispatch({
     type: ADD_MORENDA,
     morenda: {
@@ -60,6 +48,15 @@ export default function bootstrap() {
       action: () => {
         navigate('scenario')
       }
+    }
+  })
+  /* */
+
+  store.dispatch({
+    type: ADD_BOARD_EDITORS,
+    editors: {
+      'http-headers': PropertyEditorHttpHeader,
+      'http-parameters': PropertyEditorHttpParameter
     }
   })
 }

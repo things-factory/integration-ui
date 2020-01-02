@@ -5,10 +5,6 @@ export default {
   route,
   routes: [
     {
-      tagname: 'integration-setting',
-      page: 'integration-setting'
-    },
-    {
       tagname: 'connection-page',
       page: 'connection'
     },

@@ -213,7 +213,7 @@ class Connection extends connect(store)(localize(i18next)(PageView)) {
           record: {
             editable: false
           },
-          width: 180
+          width: 120
         },
         {
           type: 'datetime',
