@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 import { css, html } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin'
 
-class Connection extends connect(store)(localize(i18next)(PageView)) {
+export class Connection extends connect(store)(localize(i18next)(PageView)) {
   static get properties() {
     return {
       active: String,
