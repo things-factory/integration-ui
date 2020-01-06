@@ -15,6 +15,7 @@ import { ParametersEditor } from './grist/parameters-editor'
 import { CrontabEditor } from './grist/crontab-editor'
 
 import { PropertyEditorHttpHeader, PropertyEditorHttpParameter } from './editors/property-editor'
+import { PropertyEditorEntitySelector } from './editors/entity-editor'
 
 export default function bootstrap() {
   registerEditor('task-type', TaskTypeSelector)
@@ -55,8 +56,9 @@ export default function bootstrap() {
   store.dispatch({
     type: ADD_BOARD_EDITORS,
     editors: {
-      'http-headers': PropertyEditorHttpHeader,
-      'http-parameters': PropertyEditorHttpParameter
+      'http-headers': 'property-editor-http-header',
+      'http-parameters': 'property-editor-http-parameter',
+      'entity-selector': 'property-editor-entity-selector'
     }
   })
 }
