@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/integration-ui",
-  "version": "1.0.0-alpha.1",
+  "version": "2.0.0",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
@@ -28,13 +28,13 @@
     "migration:revert": "node ./node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
-    "@things-factory/board-ui": "^1.0.0-alpha.1",
-    "@things-factory/integration-base": "^1.0.0-alpha.1",
-    "@things-factory/shell": "^1.0.0-alpha.1",
+    "@things-factory/board-ui": "^2.0.0",
+    "@things-factory/integration-base": "^2.0.0",
+    "@things-factory/shell": "^2.0.0",
     "moment-timezone": "^0.5.27"
   },
   "devDependencies": {
-    "@things-factory/board-app": "^1.0.0-alpha.1",
-    "@things-factory/board-test": "^1.0.0-alpha.1"
+    "@things-factory/board-app": "^2.0.0",
+    "@things-factory/board-test": "^2.0.0"
   }
 }
