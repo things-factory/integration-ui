@@ -8,7 +8,7 @@ import { connect } from 'pwa-helpers/connect-mixin'
 import moment from 'moment-timezone'
 import './scenario-detail'
 
-class Scenario extends connect(store)(localize(i18next)(PageView)) {
+export class Scenario extends connect(store)(localize(i18next)(PageView)) {
   static get properties() {
     return {
       active: String,
