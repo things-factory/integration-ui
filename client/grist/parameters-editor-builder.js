@@ -50,12 +50,6 @@ class ParametersEditorBuilder extends connect(store)(LitElement) {
     }
   }
 
-  constructor() {
-    super()
-
-    this.props = []
-  }
-
   firstUpdated() {
     this.renderRoot.addEventListener('change', this._onValueChanged.bind(this))
   }
@@ -83,7 +77,7 @@ class ParametersEditorBuilder extends connect(store)(LitElement) {
       element.type = prop.type
       element.placeholder = prop.placeholder
       element.setAttribute('name', prop.name)
-      prop.placeholder = prop.placeholder
+
       if (prop.observe) {
         element.observe = prop.observe
       }
@@ -108,16 +102,13 @@ class ParametersEditorBuilder extends connect(store)(LitElement) {
       let name = prop.getAttribute('name')
       value[name] = prop.value === undefined ? DEFAULT_VALUE[prop.type] : prop.value
     })
+
     return value
   }
 
   _onValueChanged(e) {
     e.stopPropagation()
     var prop = e.target
-
-    while (prop && !prop.hasAttribute('property-editor')) {
-      prop = prop.parentNode
-    }
 
     if (!prop || !prop.hasAttribute('property-editor')) {
       return

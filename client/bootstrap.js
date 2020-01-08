@@ -12,6 +12,9 @@ import { JsonGristEditor } from './grist/json-grist-editor'
 import { ParametersEditor } from './grist/parameters-editor'
 import { CrontabEditor } from './grist/crontab-editor'
 
+import { PropertyEditorHttpHeader, PropertyEditorHttpParameter } from './editors/property-editor'
+import { PropertyEditorEntitySelector } from './editors/entity-editor'
+
 export default function bootstrap() {
   registerEditor('task-type', TaskTypeSelector)
   registerEditor('connector', ConnectorSelector)

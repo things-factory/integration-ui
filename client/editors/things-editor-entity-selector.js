@@ -50,6 +50,8 @@ export default class ThingsEditorEntitySelector extends LitElement {
   }
 
   _onInputChanged(e) {
+    e.stopPropagation()
+
     this.value = e.target.value
     this.dispatchEvent(
       new CustomEvent('change', {
@@ -68,9 +70,12 @@ export default class ThingsEditorEntitySelector extends LitElement {
       <entity-selector
         .creatable=${true}
         .queryName=${this.properties.queryName}
-        @entity-selected=${async e => {
+        @entity-selected=${e => {
+          e.stopPropagation()
+
           var entity = e.detail.entity
           this.value = entity.id
+
           this.dispatchEvent(
             new CustomEvent('change', {
               bubbles: true,
