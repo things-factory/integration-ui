@@ -107,14 +107,13 @@ export class CrontabEditorPopup extends LitElement {
         width: 100%;
         height: 100%;
         padding: 1rem;
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: auto auto auto 1fr auto;
+        grid-template: auto auto 1fr auto / repeat(6, 1fr);
         grid-gap: 0.5rem;
         justify-content: center;
         align-items: center;
       }
 
-      #wrapper > label[for='example'] {
+      #wrapper label[for='example'] {
         text-align: right;
         grid-column: 3;
         font: normal 1em var(--theme-font);
@@ -122,7 +121,7 @@ export class CrontabEditorPopup extends LitElement {
         text-transform: capitalize;
       }
 
-      #wrapper > select#example {
+      #wrapper select#example {
         grid-column: 4 / span 3;
         width: 100%;
         height: 100%;
@@ -130,7 +129,7 @@ export class CrontabEditorPopup extends LitElement {
         text-transform: capitalize;
       }
 
-      #wrapper > input {
+      #wrapper input {
         width: 100%;
         margin-top: var(--margin-default);
         padding: 5px;
@@ -138,24 +137,41 @@ export class CrontabEditorPopup extends LitElement {
         border: var(--border-dark-color);
         font: normal 1em var(--theme-font);
       }
-      #wrapper > input:focus {
+      #wrapper input:focus {
         border: 1px solid var(--primary-color);
       }
 
-      #wrapper > input:invalid {
+      #wrapper input:invalid {
         border: 1px solid var(--status-danger-color);
         color: var(--status-danger-color);
       }
 
-      #wrapper > label {
+      #wrapper label {
         width: 100%;
         height: 100%;
         font: normal 0.8em var(--theme-font);
         color: var(--primary-color);
       }
 
-      #wrapper > label:not([for='example']) {
+      #wrapper label:not([for='example']) {
         text-align: center;
+      }
+
+      #input-wrapper {
+        grid-column: span 6;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -0.25rem;
+      }
+
+      #input-wrapper > div {
+        flex: 1;
+        display: grid;
+        grid-template-rows: 1fr auto;
+        grid-gap: 0.5rem;
+        min-width: 60px;
+        max-width: 33%;
+        margin: 0.25rem;
       }
 
       #tooltip {
@@ -221,7 +237,7 @@ export class CrontabEditorPopup extends LitElement {
         }}
       >
         <label for="example">${i18next.t('label.examples')}</label>
-        <select id="example" @change=${e => (this.valueString = e.currentTarget.value)}>
+        <select id="example" @change=${e => (this.valueString = e.currentTarget.value)} .value=${this.valueString}>
           <optgroup label="${i18next.t('label.second by second')}">
             <option value="* * * * * *">${i18next.t('text.every second')}</option>
             <option value="0/2 * * * * *">${i18next.t('text.every 2 seconds')}</option>
@@ -257,78 +273,98 @@ export class CrontabEditorPopup extends LitElement {
             <option value="0 0 0 25 12 *">${i18next.t('text.every christmas')}</option>
           </optgroup>
         </select>
-        <input
-          id="second-input"
-          type="text"
-          .value=${this.second || ''}
-          @input=${e => (this.second = e.currentTarget.value)}
-          @focus=${e => {
-            this.showTooltip({ type: 'second' })
-          }}
-          pattern="${createCronRegex('sec')}"
-          required
-        />
-        <input
-          id="minute-input"
-          type="text"
-          .value=${this.minute || ''}
-          @input=${e => (this.minute = e.currentTarget.value)}
-          @focus=${e => {
-            this.showTooltip({ type: 'minute' })
-          }}
-          pattern="${createCronRegex('min')}"
-          required
-        />
-        <input
-          id="hour-input"
-          type="text"
-          .value=${this.hour || ''}
-          @input=${e => (this.hour = e.currentTarget.value)}
-          @focus=${e => {
-            this.showTooltip({ type: 'hour' })
-          }}
-          pattern="${createCronRegex('hour')}"
-          required
-        />
-        <input
-          id="day-of-month-input"
-          type="text"
-          .value=${this.dayOfMonth || ''}
-          @input=${e => (this.dayOfMonth = e.currentTarget.value)}
-          @focus=${e => {
-            this.showTooltip({ type: 'dayOfMonth' })
-          }}
-          pattern="${createCronRegex('day')}"
-          required
-        />
-        <input
-          id="month-input"
-          type="text"
-          .value=${this.month || ''}
-          @input=${e => (this.month = e.currentTarget.value)}
-          @focus=${e => {
-            this.showTooltip({ type: 'month' })
-          }}
-          pattern="${createCronRegex('month')}"
-          required
-        />
-        <input
-          id="day-of-week-input"
-          type="text"
-          .value=${this.dayOfWeek || ''}
-          @input=${e => (this.dayOfWeek = e.currentTarget.value)}
-          @focus=${e => {
-            this.showTooltip({ type: 'dayOfWeek' })
-          }}
-          pattern="${createCronRegex('dayOfWeek')}"
-          required
-        />
-        <label for="second-input">${i18next.t('label.second')}</label>
-        <label for="minute-input">${i18next.t('label.minute')}</label>
-        <label for="hour-input">${i18next.t('label.hour')}</label>
-        <label for="day-of-month-input">${i18next.t('label.day-of-month')}</label>
-        <label for="month-input">${i18next.t('label.month')}</label>
-        <label for="day-of-week-input">${i18next.t('label.day-of-week')}</label>
+        <div id="input-wrapper">
+          <div>
+            <input
+              id="second-input"
+              class="second"
+              type="text"
+              .value=${this.second || ''}
+              @input=${e => (this.second = e.currentTarget.value)}
+              @focus=${e => {
+                this.showTooltip({ type: 'second' })
+              }}
+              pattern="${createCronRegex('sec')}"
+              required
+            />
+            <label for="second-input" class="second">${i18next.t('label.second')}</label>
+          </div>
+          <div>
+            <input
+              id="minute-input"
+              class="minute"
+              type="text"
+              .value=${this.minute || ''}
+              @input=${e => (this.minute = e.currentTarget.value)}
+              @focus=${e => {
+                this.showTooltip({ type: 'minute' })
+              }}
+              pattern="${createCronRegex('min')}"
+              required
+            />
+            <label for="minute-input" class="minute">${i18next.t('label.minute')}</label>
+          </div>
+          <div>
+            <input
+              id="hour-input"
+              class="hour"
+              type="text"
+              .value=${this.hour || ''}
+              @input=${e => (this.hour = e.currentTarget.value)}
+              @focus=${e => {
+                this.showTooltip({ type: 'hour' })
+              }}
+              pattern="${createCronRegex('hour')}"
+              required
+            />
+            <label for="hour-input" class="hour">${i18next.t('label.hour')}</label>
+          </div>
+          <div>
+            <input
+              id="day-of-month-input"
+              class="day-of-month"
+              type="text"
+              .value=${this.dayOfMonth || ''}
+              @input=${e => (this.dayOfMonth = e.currentTarget.value)}
+              @focus=${e => {
+                this.showTooltip({ type: 'dayOfMonth' })
+              }}
+              pattern="${createCronRegex('day')}"
+              required
+            />
+            <label for="day-of-month-input" class="day-of-month">${i18next.t('label.day-of-month')}</label>
+          </div>
+          <div>
+            <input
+              id="month-input"
+              class="month"
+              type="text"
+              .value=${this.month || ''}
+              @input=${e => (this.month = e.currentTarget.value)}
+              @focus=${e => {
+                this.showTooltip({ type: 'month' })
+              }}
+              pattern="${createCronRegex('month')}"
+              required
+            />
+            <label for="month-input" class="month">${i18next.t('label.month')}</label>
+          </div>
+          <div>
+            <input
+              id="day-of-week-input"
+              class="day-of-week"
+              type="text"
+              .value=${this.dayOfWeek || ''}
+              @input=${e => (this.dayOfWeek = e.currentTarget.value)}
+              @focus=${e => {
+                this.showTooltip({ type: 'dayOfWeek' })
+              }}
+              pattern="${createCronRegex('dayOfWeek')}"
+              required
+            />
+            <label for="day-of-week-input" class="day-of-week">${i18next.t('label.day-of-week')}</label>
+          </div>
+        </div>
         <div id="tooltip">
           ${this._tooltip.map(
             tip => html`
