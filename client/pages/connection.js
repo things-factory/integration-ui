@@ -39,7 +39,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
 
   get context() {
     return {
-      title: i18next.t('text.connection'),
+      title: i18next.t('text.connection list'),
       actions: [
         {
           title: i18next.t('button.save'),

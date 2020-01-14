@@ -42,7 +42,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
 
   get context() {
     return {
-      title: i18next.t('text.scenario'),
+      title: i18next.t('text.scenario list'),
       actions: [
         {
           title: i18next.t('button.save'),
