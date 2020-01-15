@@ -190,7 +190,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
         {
           type: 'parameters',
           name: 'params',
-          header: 'params',
+          header: i18next.t('field.params'),
           record: {
             editable: true,
             options: async (value, column, record, row, field) => {
