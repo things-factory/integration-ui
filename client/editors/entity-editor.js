@@ -3,7 +3,7 @@
  */
 import { html, css } from 'lit-element'
 import { ThingsEditorProperty, ThingsEditorPropertyStyles } from '@things-factory/board-ui/client/modeller-module'
-import { deepClone } from '@things-factory/shell'
+import { deepClone } from '@things-factory/utils'
 
 import './things-editor-entity-selector'
 

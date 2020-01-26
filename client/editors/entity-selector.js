@@ -1,5 +1,6 @@
 import { i18next } from '@things-factory/i18n-base'
-import { client, isMobileDevice, gqlBuilder } from '@things-factory/shell'
+import { client } from '@things-factory/shell'
+import { isMobileDevice, gqlBuilder } from '@things-factory/utils'
 import gql from 'graphql-tag'
 import { css, html, LitElement } from 'lit-element'
 import { MultiColumnFormStyles } from '@things-factory/form-ui'
