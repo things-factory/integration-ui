@@ -14,6 +14,8 @@
   "label.examples": "[ms]examples",
   "label.hour": "[ms]hour",
   "label.hourly": "[ms]hourly",
+  "label.level": "[ms]level",
+  "label.message": "[ms]message",
   "label.minute by minute": "[ms]minute by minute",
   "label.minute": "[ms]minute",
   "label.module": "[ms]module",

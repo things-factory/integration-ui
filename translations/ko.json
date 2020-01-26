@@ -14,6 +14,8 @@
   "label.examples": "예시",
   "label.hour": "시간",
   "label.hourly": "시간단위",
+  "label.level": "레벨",
+  "label.message": "메시지",
   "label.minute by minute": "분단위",
   "label.minute": "분",
   "label.module": "모듈",
