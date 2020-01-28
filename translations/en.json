@@ -7,6 +7,7 @@
   "field.schedule": "schedule",
   "field.task": "task",
   "field.type": "type",
+  "label.clear": "clear",
   "label.confirm": "confirm",
   "label.daily": "daily",
   "label.day-of-month": "day of month",

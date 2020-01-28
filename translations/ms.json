@@ -7,6 +7,7 @@
   "field.schedule": "[ms]schedule",
   "field.task": "[ms]task",
   "field.type": "[ms]type",
+  "label.clear": "[ms]clear",
   "label.confirm": "[ms]confirm",
   "label.daily": "[ms]daily",
   "label.day-of-month": "[ms]day of month",

@@ -7,6 +7,7 @@
   "field.schedule": "스케줄",
   "field.task": "작업",
   "field.type": "분류",
+  "label.clear": "비우기",
   "label.confirm": "확인",
   "label.daily": "일간",
   "label.day-of-month": "날짜",
