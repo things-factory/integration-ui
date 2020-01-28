@@ -204,15 +204,16 @@ export class CrontabEditorPopup extends LitElement {
       #button-wrapper {
         grid-column: 1 / span 6;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: right;
-        gap: 0.5rem;
+        flex-wrap: wrap-reverse;
+        flex-direction: row-reverse;
+        margin: -0.25rem;
       }
 
       mwc-button {
         background-color: var(--secondary-color);
         border-radius: var(--button-border-radius);
         --mdc-theme-primary: #fff;
+        margin: 0.25rem
       }
       mwc-button:hover,
       mwc-button:active {
@@ -381,6 +382,13 @@ export class CrontabEditorPopup extends LitElement {
         </div>
         <div id="button-wrapper">
           <mwc-button
+            icon="done"
+            .label="${i18next.t('label.confirm')}"
+            @click=${e => {
+              this.confirm()
+            }}
+          ></mwc-button>
+          <mwc-button
             icon="clear"
             .label="${i18next.t('label.clear')}"
             @click=${e => {
@@ -393,13 +401,6 @@ export class CrontabEditorPopup extends LitElement {
                   }
                 })
               )
-            }}
-          ></mwc-button>
-          <mwc-button
-            icon="done"
-            .label="${i18next.t('label.confirm')}"
-            @click=${e => {
-              this.confirm()
             }}
           ></mwc-button>
         </div>
