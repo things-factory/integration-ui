@@ -11,8 +11,8 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
   static get properties() {
     return {
       active: String,
-      _searchFields: Array,
-      config: Object
+      searchConfig: Array,
+      gristConfig: Object
     }
   }
 
@@ -59,13 +59,13 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
     return html`
       <search-form
         id="search-form"
-        .fields=${this._searchFields}
+        .fields=${this.searchConfig}
         @submit=${async () => this.dataGrist.fetch()}
       ></search-form>
 
       <data-grist
         .mode=${isMobileDevice() ? 'LIST' : 'GRID'}
-        .config=${this.config}
+        .config=${this.gristConfig}
         .fetchHandler=${this.fetchHandler.bind(this)}
       ></data-grist>
     `
@@ -80,7 +80,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
   }
 
   async pageInitialized() {
-    this._searchFields = [
+    this.searchConfig = [
       {
         name: 'name',
         type: 'text',
@@ -115,7 +115,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
       }
     ]
 
-    this.config = {
+    this.gristConfig = {
       list: { fields: ['name', 'description', 'type'] },
       columns: [
         { type: 'gutter', gutterName: 'sequence' },

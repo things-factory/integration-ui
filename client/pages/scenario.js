@@ -8,14 +8,15 @@ import gql from 'graphql-tag'
 import { css, html } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin'
 import moment from 'moment-timezone'
+import { SubscriptionClient } from 'subscriptions-transport-ws'
 import './scenario-detail'
 
 export class Scenario extends connect(store)(localize(i18next)(PageView)) {
   static get properties() {
     return {
       active: String,
-      _searchFields: Array,
-      config: Object
+      searchConfig: Array,
+      gristConfig: Object
     }
   }
 
@@ -47,6 +48,14 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       title: i18next.t('text.scenario list'),
       actions: [
         {
+          title: i18next.t('button.start monitor'),
+          action: this.startSubscribe.bind(this)
+        },
+        {
+          title: i18next.t('button.stop monitor'),
+          action: this.stopSubscribe.bind(this)
+        },
+        {
           title: i18next.t('button.save'),
           action: this._updateScenario.bind(this)
         },
@@ -62,13 +71,13 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
     return html`
       <search-form
         id="search-form"
-        .fields=${this._searchFields}
+        .fields=${this.searchConfig}
         @submit=${async () => this.dataGrist.fetch()}
       ></search-form>
 
       <data-grist
         .mode=${isMobileDevice() ? 'LIST' : 'GRID'}
-        .config=${this.config}
+        .config=${this.gristConfig}
         .fetchHandler=${this.fetchHandler.bind(this)}
       ></data-grist>
     `
@@ -83,7 +92,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
   }
 
   async pageInitialized() {
-    this._searchFields = [
+    this.searchConfig = [
       {
         name: 'name',
         type: 'text',
@@ -102,7 +111,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       }
     ]
 
-    this.config = {
+    this.gristConfig = {
       list: { fields: ['name', 'description', 'status'] },
       columns: [
         { type: 'gutter', gutterName: 'sequence' },
@@ -177,7 +186,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
             align: 'center',
             editable: true
           },
-          width: 120
+          width: 80
         },
         {
           type: 'select',
@@ -199,6 +208,34 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
             editable: true
           },
           width: 60
+        },
+        {
+          type: 'progress',
+          name: 'progress',
+          header: i18next.t('field.progress'),
+          record: {
+            editable: false
+          },
+          width: 80
+        },
+        {
+          type: 'number',
+          name: 'rounds',
+          header: i18next.t('field.rounds'),
+          record: {
+            editable: false,
+            align: 'right'
+          },
+          width: 60
+        },
+        {
+          type: 'string',
+          name: 'message',
+          header: i18next.t('field.message'),
+          record: {
+            editable: false
+          },
+          width: 220
         },
         {
           type: 'object',
@@ -236,6 +273,13 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       await this.updateComplete
 
       this.dataGrist.fetch()
+    }
+
+    if ('active' in changes) {
+      if (!this.active) {
+        console.log('stopSubscribe')
+        this.stopSubscribe()
+      }
     }
   }
 
@@ -340,7 +384,9 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
         let patchField = patch.id ? { id: patch.id } : {}
         const dirtyFields = patch.__dirtyfields__
         for (let key in dirtyFields) {
-          patchField[key] = dirtyFields[key].after
+          if (['message', 'step', 'steps', 'progress', 'rounds'].indexOf(key) == -1) {
+            patchField[key] = dirtyFields[key].after
+          }
         }
         patchField.cuFlag = patch.__dirty__
 
@@ -360,6 +406,74 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       })
 
       if (!response.errors) this.dataGrist.fetch()
+    }
+  }
+
+  async startSubscribe() {
+    this.client = new SubscriptionClient(`ws://${location.host}/subscriptions`, {
+      reconnect: true
+    })
+
+    this.client.onError(() => {
+      var client = this.client
+      //readyState === 3 인 경우 url을 잘 못 입력했거나, 서버에 문제가 있는 경우이므로 reconnect = false로 변경한다.
+      if (client.status === 3) {
+        client.reconnect = false
+      }
+    })
+
+    this.client.onConnected(() => {
+      this.subscription = this.client
+        .request({
+          query: `
+      subscription {
+        scenarioState{
+          name
+          state
+          progress {
+            rate
+            steps
+            step
+            rounds
+          }
+          message
+        }
+      }
+      `
+        })
+        .subscribe({
+          next: ({ data }) => {
+            if (data) {
+              var {
+                name,
+                state,
+                progress: { rate, steps, step, rounds },
+                message
+              } = data.scenarioState
+            }
+
+            var { records } = this.dataGrist.dirtyData
+            var record = records && records.find(record => record.name === name)
+
+            if (record) {
+              record.progress = rate
+              record.steps = steps
+              record.step = step
+              record.rounds = rounds
+              record.message = message
+
+              this.dataGrist.refresh()
+            }
+          }
+        })
+    })
+  }
+
+  async stopSubscribe() {
+    if (this.client) {
+      this.client.unsubscribeAll()
+      this.client.close(true)
+      delete this.client
     }
   }
 

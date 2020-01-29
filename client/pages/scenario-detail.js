@@ -41,7 +41,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   }
 
   get dataGrist() {
-    return this.shadowRoot.querySelector('data-grist')
+    return this.renderRoot.querySelector('data-grist')
   }
 
   render() {
