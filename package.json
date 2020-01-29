@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/integration-ui",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
@@ -31,7 +31,8 @@
     "@things-factory/board-ui": "^2.0.0",
     "@things-factory/integration-base": "^2.0.0",
     "@things-factory/shell": "^2.0.0",
-    "moment-timezone": "^0.5.27"
+    "moment-timezone": "^0.5.27",
+    "subscriptions-transport-ws": "^0.9.16"
   },
   "devDependencies": {
     "@things-factory/board-app": "^2.0.0",
