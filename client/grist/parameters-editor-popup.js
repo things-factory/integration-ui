@@ -33,6 +33,8 @@ export class ParametersEditorPopup extends LitElement {
           display: flex;
           align-items: center;
           justify-content: center;
+
+          color: var(--primary-color);
         }
 
         .button-container {
