@@ -27,6 +27,14 @@ export class ParametersEditorPopup extends LitElement {
           flex: 1;
         }
 
+        span {
+          flex: 1;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
         .button-container {
           display: flex;
           margin-left: auto;
@@ -55,7 +63,7 @@ export class ParametersEditorPopup extends LitElement {
             </parameters-editor-builder>
           `
         : html`
-            <span>No properties defined</span>
+            <span><i18n-msg msgid="text.no properties to set"></i18n-msg></span>
           `}
 
       <div class="button-container">
