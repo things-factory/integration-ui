@@ -23,18 +23,8 @@ export class ParametersEditor extends LitElement {
     return [
       PropertySharedStyle,
       css`
-        label {
-          display: block;
-          margin: 10px;
-
-          text-align: right;
-          font-size: 1em;
-          color: #e46c2e;
-          text-transform: capitalize;
-        }
-
-        option-builder {
-          height: 100px;
+        :host {
+          color: black;
         }
       `
     ]
