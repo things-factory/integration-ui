@@ -3,7 +3,6 @@
  */
 
 import { css, html, LitElement } from 'lit-element'
-import { PropertySharedStyle } from '@things-factory/board-ui/client/board-modeller/property-sidebar/property-shared-style'
 import { openPopup } from '@things-factory/layout-base'
 import './parameters-editor-builder'
 import './parameters-editor-popup'
