@@ -24,6 +24,9 @@ export class ParametersEditor extends LitElement {
       css`
         :host {
           color: black;
+
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       `
     ]
