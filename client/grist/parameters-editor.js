@@ -21,7 +21,6 @@ export class ParametersEditor extends LitElement {
 
   static get styles() {
     return [
-      PropertySharedStyle,
       css`
         :host {
           color: black;
