@@ -480,14 +480,15 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
   async startScenario(record) {
     var response = await client.mutate({
       mutation: gql`
-        mutation($name: String!) {
-          startScenario(name: $name) {
+        mutation($scenarioName: String!, $instanceName: String) {
+          startScenario(scenarioName: $scenarioName, instanceName: $instanceName) {
             status
           }
         }
       `,
       variables: {
-        name: record.name
+        scenarioName: record.name,
+        instanceName: record.name
       }
     })
 
@@ -510,14 +511,14 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
   async stopScenario(record) {
     var response = await client.mutate({
       mutation: gql`
-        mutation($name: String!) {
-          stopScenario(name: $name) {
+        mutation($instanceName: String!) {
+          stopScenario(instanceName: $instanceName) {
             status
           }
         }
       `,
       variables: {
-        name: record.name
+        instanceName: record.name
       }
     })
 
