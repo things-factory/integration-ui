@@ -427,8 +427,9 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
         .request({
           query: `
       subscription {
-        scenarioState{
-          name
+        scenarioInstanceState{
+          instanceName
+          scenarioName
           state
           progress {
             rate
@@ -436,7 +437,10 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
             step
             rounds
           }
+          variables
+          data
           message
+          timestamp
         }
       }
       `
@@ -445,15 +449,16 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
           next: ({ data }) => {
             if (data) {
               var {
-                name,
+                instanceName,
+                scenarioName,
                 state,
                 progress: { rate, steps, step, rounds },
                 message
-              } = data.scenarioState
+              } = data.scenarioInstanceState
             }
 
             var { records } = this.dataGrist.dirtyData
-            var record = records && records.find(record => record.name === name)
+            var record = records && records.find(record => record.name === instanceName)
 
             if (record) {
               record.progress = rate
