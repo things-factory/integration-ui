@@ -487,7 +487,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       mutation: gql`
         mutation($scenarioName: String!, $instanceName: String) {
           startScenario(scenarioName: $scenarioName, instanceName: $instanceName) {
-            status
+            state
           }
         }
       `,
@@ -497,9 +497,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       }
     })
 
-    var status = response.data.startScenario.status
-
-    record.status = status
+    record.status = 1
 
     this.dataGrist.refresh()
 
@@ -507,7 +505,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       new CustomEvent('notify', {
         detail: {
           level: 'info',
-          message: `${status ? 'success' : 'fail'} to start scenario : ${record.name}`
+          message: `${response.data.startScenario ? 'success' : 'fail'} to start scenario : ${record.name}`
         }
       })
     )
@@ -518,7 +516,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       mutation: gql`
         mutation($instanceName: String!) {
           stopScenario(instanceName: $instanceName) {
-            status
+            state
           }
         }
       `,
@@ -527,9 +525,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       }
     })
 
-    var status = response.data.stopScenario.status
-
-    record.status = status
+    record.status = 0
 
     this.dataGrist.refresh()
 
@@ -537,7 +533,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       new CustomEvent('notify', {
         detail: {
           level: 'info',
-          message: `${status ? 'fail' : 'success'} to stop scenario : ${record.name}`
+          message: `${response.data.stopScenario ? 'success' : 'fail'} to stop scenario : ${record.name}`
         }
       })
     )
