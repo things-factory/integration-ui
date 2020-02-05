@@ -41,7 +41,12 @@
   "text.allowed values": "[zh]allowed values",
   "text.alternative single values": "[zh]alternative single values",
   "text.any value": "[zh]any value",
+  "text.connection": "[zh]connection",
   "text.connection list": "[zh]connection list",
+  "text.scenario": "[zh]scenario",
+  "text.sure_to_x": "[zh]Sure to {x}?",
+  "text.info_x_successfully": "[zh]{x} success.",
+  "text.delete": "[zh]delete",
   "text.every 12 hours": "[zh]every 12 hours",
   "text.every 15 minutes": "[zh]every 15 minutes",
   "text.every 15 seconds": "[zh]every 15 seconds",
@@ -65,5 +70,6 @@
   "text.step values": "[zh]step values",
   "text.the first day of every month": "[zh]the first day of every month",
   "text.the first day of every year": "[zh]the first day of every year",
-  "text.value list separator": "[zh]value list separator"
+  "text.value list separator": "[zh]value list separator",
+  "title.scenario-detail": "[zh]scenario detail"
 }

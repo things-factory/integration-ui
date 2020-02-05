@@ -41,7 +41,12 @@
   "text.allowed values": "[ms]allowed values",
   "text.alternative single values": "[ms]alternative single values",
   "text.any value": "[ms]any value",
-  "text.connection list": "connection list",
+  "text.connection": "[ms]connection",
+  "text.connection list": "[ms]connection list",
+  "text.scenario": "[ms]scenario",
+  "text.sure_to_x": "[ms]Sure to {x}?",
+  "text.info_x_successfully": "[ms]{x} success.",
+  "text.delete": "[ms]delete",
   "text.every 12 hours": "[ms]every 12 hours",
   "text.every 15 minutes": "[ms]every 15 minutes",
   "text.every 15 seconds": "[ms]every 15 seconds",
@@ -65,5 +70,6 @@
   "text.step values": "[ms]step values",
   "text.the first day of every month": "[ms]the first day of every month",
   "text.the first day of every year": "[ms]the first day of every year",
-  "text.value list separator": "[ms]value list separator"
+  "text.value list separator": "[ms]value list separator",
+  "title.scenario-detail": "[ms]scenario detail"
 }

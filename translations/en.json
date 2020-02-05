@@ -41,7 +41,12 @@
   "text.allowed values": "allowed values",
   "text.alternative single values": "alternative single values",
   "text.any value": "any value",
+  "text.connection": "connection",
   "text.connection list": "connection list",
+  "text.scenario": "scenario",
+  "text.sure_to_x": "Sure to {x}?",
+  "text.info_x_successfully": "{x} success.",
+  "text.delete": "delete",
   "text.every 12 hours": "every 12 hours",
   "text.every 15 minutes": "every 15 minutes",
   "text.every 15 seconds": "every 15 seconds",
@@ -65,5 +70,6 @@
   "text.step values": "step values",
   "text.the first day of every month": "the first day of every month",
   "text.the first day of every year": "the first day of every year",
-  "text.value list separator": "value list separator"
+  "text.value list separator": "value list separator",
+  "title.scenario-detail": "scenario detail"
 }
