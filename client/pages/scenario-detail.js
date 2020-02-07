@@ -172,8 +172,15 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
     const response = await client.query({
       query: gql`
         query {
-          scenario(id: "${this.scenario.id}") {
-            steps {
+          steps ( 
+            filters: { 
+              name: "scenario",
+              value: "${this.scenario.id}",
+              operator: "eq" 
+            },
+            sortings: { name: "sequence" }
+          ) {
+            items {
               id
               name
               description
@@ -182,14 +189,15 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
               connection
               params
             }
+            total
           }
         }
       `
     })
 
     return {
-      total: response.data.scenario.steps.length || 0,
-      records: response.data.scenario.steps || []
+      total: response.data.steps.total || 0,
+      records: response.data.steps.items || []
     }
   }
 
