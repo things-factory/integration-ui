@@ -56,6 +56,10 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
           action: this.stopSubscribe.bind(this)
         },
         {
+          title: i18next.t('button.copy'),
+          action: this._copyScenario.bind(this)
+        },
+        {
           title: i18next.t('button.save'),
           action: this._updateScenario.bind(this)
         },
@@ -377,6 +381,27 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
     }
   }
 
+  async _copyScenario() {
+    var selected = this.dataGrist.selected
+    if (selected.length == 0) return
+
+    if (!confirm(i18next.t('text.sure_to_x', { x: i18next.t('text.copy') }))) return
+    var response = await client.mutate({
+      mutation: gql`
+        mutation($ids: [String]!) {
+          copyScenarios(ids: $ids) {
+            id
+          }
+        }
+      `,
+      variables: {
+        ids: selected.map(r => r.id)
+      }
+    })
+
+    if (!response.errors) this.dataGrist.fetch()
+  }
+
   async _updateScenario() {
     let patches = this.dataGrist.dirtyRecords
     if (patches && patches.length) {
@@ -426,24 +451,24 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
       this.subscription = this.client
         .request({
           query: `
-      subscription {
-        scenarioInstanceState{
-          instanceName
-          scenarioName
-          state
-          progress {
-            rate
-            steps
-            step
-            rounds
-          }
-          variables
-          data
-          message
-          timestamp
-        }
-      }
-      `
+            subscription {
+              scenarioInstanceState{
+                instanceName
+                scenarioName
+                state
+                progress {
+                  rate
+                  steps
+                  step
+                  rounds
+                }
+                variables
+                data
+                message
+                timestamp
+              }
+            }
+          `
         })
         .subscribe({
           next: ({ data }) => {
