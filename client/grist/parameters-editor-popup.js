@@ -89,6 +89,10 @@ export class ParametersEditorPopup extends LitElement {
       => 
       이런 이유로, Object.assign(...)을 사용하였다.
     */
+    if (!this.value) {
+      this.value = {}
+    }
+
     for (let key in this.value) {
       delete this.value[key]
     }
