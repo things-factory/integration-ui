@@ -171,6 +171,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
           record: {
             editable: true
           },
+          sortable: true,
           width: 150
         },
         {
@@ -211,6 +212,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
             align: 'center',
             editable: true
           },
+          sortable: true,
           width: 60
         },
         {
@@ -264,7 +266,13 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
         selectable: {
           multiple: true
         }
-      }
+      },
+      sorters: [
+        {
+          name: 'name',
+          desc: true
+        }
+      ]
     }
 
     await this.updateComplete

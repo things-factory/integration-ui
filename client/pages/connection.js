@@ -150,6 +150,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
           record: {
             editable: true
           },
+          sortable: true,
           width: 150
         },
         {
@@ -169,6 +170,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
             align: 'center',
             editable: true
           },
+          sortable: true,
           width: 60
         },
         {
@@ -178,6 +180,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
           record: {
             editable: true
           },
+          sortable: true,
           width: 200
         },
         {
@@ -187,6 +190,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
           record: {
             editable: true
           },
+          sortable: true,
           width: 200
         },
         {
@@ -215,6 +219,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
           record: {
             editable: false
           },
+          sortable: true,
           width: 120
         },
         {
@@ -224,6 +229,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
           record: {
             editable: false
           },
+          sortable: true,
           width: 180
         }
       ],
@@ -231,7 +237,13 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
         selectable: {
           multiple: true
         }
-      }
+      },
+      sorters: [
+        {
+          name: 'name',
+          desc: true
+        }
+      ]
     }
 
     await this.updateComplete
