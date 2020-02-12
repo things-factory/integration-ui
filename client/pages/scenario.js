@@ -250,6 +250,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
           record: {
             editable: false
           },
+          sortable: true,
           width: 120
         },
         {
@@ -259,6 +260,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
           record: {
             editable: false
           },
+          sortable: true,
           width: 180
         }
       ],
