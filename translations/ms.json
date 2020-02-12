@@ -1,4 +1,6 @@
 {
+  "button.copy": "[ms]copy",
+  "text.copy": "[ms]copy",
   "button.start monitor": "[ms]start monitor",
   "button.stop monitor": "[ms]stop monitor",
   "field.api_url": "[ms]API URL",

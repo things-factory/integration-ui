@@ -1,4 +1,6 @@
 {
+  "button.copy": "복사",
+  "text.copy": "복사",
   "button.start monitor": "모니터링 시작",
   "button.stop monitor": "모니터링 종료",
   "field.api_url": "API URL",

@@ -1,4 +1,6 @@
 {
+  "button.copy": "[zh]copy",
+  "text.copy": "[zh]copy",
   "button.start monitor": "[zh]start monitor",
   "button.stop monitor": "[zh]stop monitor",
   "field.api_url": "[zh]API URL",

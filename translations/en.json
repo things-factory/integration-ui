@@ -1,4 +1,5 @@
 {
+  "button.copy": "copy",
   "button.start monitor": "start monitor",
   "button.stop monitor": "stop monitor",
   "field.api_url": "API URL",
@@ -46,6 +47,7 @@
   "text.scenario": "scenario",
   "text.sure_to_x": "Sure to {x}?",
   "text.info_x_successfully": "{x} success.",
+  "text.copy": "copy",
   "text.delete": "delete",
   "text.every 12 hours": "every 12 hours",
   "text.every 15 minutes": "every 15 minutes",
