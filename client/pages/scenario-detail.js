@@ -1,7 +1,7 @@
 import { MultiColumnFormStyles } from '@things-factory/form-ui'
 import { i18next, localize } from '@things-factory/i18n-base'
 import { client } from '@things-factory/shell'
-import { isMobileDevice } from '@things-factory/utils'
+import { isMobileDevice, gqlBuilder } from '@things-factory/utils'
 import gql from 'graphql-tag'
 import { css, html, LitElement } from 'lit-element'
 
@@ -69,14 +69,6 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
       list: { fields: ['name', 'description', 'task'] },
       columns: [
         { type: 'gutter', gutterName: 'row-selector', multiple: true },
-        {
-          type: 'gutter',
-          gutterName: 'button',
-          icon: 'add',
-          handlers: {
-            click: (...args) => this._copyRecord(...args)
-          }
-        },
         { type: 'gutter', gutterName: 'sequence' },
         {
           type: 'gutter',
@@ -212,8 +204,10 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   async fetchTaskType(name) {
     const response = await client.query({
       query: gql`
-        query($name: String) {
-          taskType(name: $name) {
+        query {
+          taskType(${gqlBuilder.buildArgs({
+            name
+          })}) {
             name
             description
             parameterSpec {
@@ -225,10 +219,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
             }
           }
         }
-      `,
-      variables: {
-        name
-      }
+      `
     })
 
     return response.data.taskType
@@ -245,20 +236,21 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
         }
 
         return { ...patch.__origin__, ...patchField }
+
+        // let patchField = patch.id ? { id: patch.id } : {}
+        // return patchField
       })
 
-      const response = await client.mutate({
-        mutation: gql`
-          mutation($scenarioId: String!, $patches: [StepPatch]!) {
-            updateMultipleStep(scenarioId: $scenarioId, patches: $patches) {
+      const response = await client.query({
+        query: gql`
+          mutation {
+            updateMultipleStep(scenarioId: "${this.scenario.id}", ${gqlBuilder.buildArgs({
+          patches
+        })}) {
               name
             }
           }
-        `,
-        variables: {
-          scenarioId: this.scenario.id,
-          patches
-        }
+        `
       })
 
       if (!response.errors) this.dataGrist.fetch()
@@ -266,34 +258,37 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   }
 
   async _deleteSteps() {
-    if (!confirm(i18next.t('text.sure_to_x', { x: i18next.t('text.delete') }))) return
+    if (
+      confirm(
+        i18next.t('text.sure_to_x', {
+          x: i18next.t('text.delete')
+        })
+      )
+    ) {
+      const ids = this.dataGrist.selected.map(record => record.id)
+      if (ids && ids.length > 0) {
+        const response = await client.query({
+          query: gql`
+            mutation {
+              deleteSteps(${gqlBuilder.buildArgs({ ids })})
+            }
+          `
+        })
 
-    const ids = this.dataGrist.selected.map(record => record.id)
-    if (!(ids && ids.length > 0)) return
-
-    const response = await client.mutate({
-      mutation: gql`
-        mutation($ids: [String]!) {
-          deleteSteps(ids: $ids)
+        if (!response.errors) {
+          this.dataGrist.fetch()
+          await document.dispatchEvent(
+            new CustomEvent('notify', {
+              detail: {
+                message: i18next.t('text.info_x_successfully', {
+                  x: i18next.t('text.delete')
+                })
+              }
+            })
+          )
         }
-      `,
-      variables: {
-        ids
       }
-    })
-
-    if (response.errors) return
-
-    this.dataGrist.fetch()
-    await document.dispatchEvent(
-      new CustomEvent('notify', {
-        detail: {
-          message: i18next.t('text.info_x_successfully', {
-            x: i18next.t('text.delete')
-          })
-        }
-      })
-    )
+    }
   }
 
   _moveRecord(steps, columns, data, column, record, rowIndex) {
@@ -301,31 +296,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
     var grist = this.dataGrist
     grist._data.records.splice(rowIndex, 1)
     grist._data.records.splice(rowIndex + steps, 0, record)
-    grist.dispatchEvent(
-      new CustomEvent('record-change', {
-        bubbles: true,
-        composed: true
-      })
-    )
-  }
-
-  _copyRecord(columns, data, column, record, rowIndex) {
-    if (rowIndex >= data.records.length) return
-    var grist = this.dataGrist
-    var copiedRecord = {
-      name: record.name,
-      description: record.description,
-      task: record.task,
-      connection: record.connection,
-      params: record.params
-    }
-    grist._data.records.splice(rowIndex + 1, 0, copiedRecord)
-    grist.dispatchEvent(
-      new CustomEvent('record-change', {
-        bubbles: true,
-        composed: true
-      })
-    )
+    grist.refresh()
   }
 }
 
