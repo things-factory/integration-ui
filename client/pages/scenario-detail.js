@@ -69,6 +69,14 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
       list: { fields: ['name', 'description', 'task'] },
       columns: [
         { type: 'gutter', gutterName: 'row-selector', multiple: true },
+        {
+          type: 'gutter',
+          gutterName: 'button',
+          icon: 'add',
+          handlers: {
+            click: (...args) => this._copyRecord(...args)
+          }
+        },
         { type: 'gutter', gutterName: 'sequence' },
         {
           type: 'gutter',
@@ -297,6 +305,25 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
     grist._data.records.splice(rowIndex, 1)
     grist._data.records.splice(rowIndex + steps, 0, record)
     grist.refresh()
+  }
+
+  _copyRecord(columns, data, column, record, rowIndex) {
+    if (rowIndex >= data.records.length) return
+    var grist = this.dataGrist
+    var copiedRecord = {
+      name: record.name,
+      description: record.description,
+      task: record.task,
+      connection: record.connection,
+      params: record.params
+    }
+    grist._data.records.splice(rowIndex + 1, 0, copiedRecord)
+    grist.dispatchEvent(
+      new CustomEvent('record-change', {
+        bubbles: true,
+        composed: true
+      })
+    )
   }
 }
 
