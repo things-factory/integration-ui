@@ -11,6 +11,7 @@
   "field.progress": "[ms]progress",
   "field.rounds": "[ms]rounds",
   "field.schedule": "[ms]schedule",
+  "field.skip": "[ms]skip",
   "field.task": "[ms]task",
   "field.type": "[ms]type",
   "label.clear": "[ms]clear",

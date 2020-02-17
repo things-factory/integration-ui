@@ -11,6 +11,7 @@
   "field.progress": "progress",
   "field.rounds": "rounds",
   "field.schedule": "schedule",
+  "field.skip": "skip",
   "field.task": "task",
   "field.type": "type",
   "label.clear": "clear",

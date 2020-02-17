@@ -11,6 +11,7 @@
   "field.progress": "진척",
   "field.rounds": "회차",
   "field.schedule": "스케줄",
+  "field.skip": "건너뛰기",
   "field.task": "작업",
   "field.type": "분류",
   "label.clear": "비우기",
@@ -73,6 +74,5 @@
   "text.the first day of every month": "매월 1일마다",
   "text.the first day of every year": "매년 1월 1일마다",
   "text.value list separator": "값 구분자",
-  "text.skip": "건너뛰기",
   "title.scenario-detail": "시나리오 상세스텝"
 }
