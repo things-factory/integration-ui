@@ -205,6 +205,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
               task
               connection
               params
+              skip
             }
             total
           }
