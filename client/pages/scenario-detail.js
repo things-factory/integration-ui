@@ -133,7 +133,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
         },
         {
           type: 'boolean',
-          name: 'ifSkip',
+          name: 'skip',
           header: i18next.t('field.skip'),
           record: {
             editable: true
