@@ -307,14 +307,25 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   }
 
   _moveRecord(steps, columns, data, column, record, rowIndex) {
-    if (rowIndex >= data.records.length || rowIndex + steps < 0 || rowIndex + steps > data.records.length) return
+    var moveTo = rowIndex + steps, length = data.records.length
+    if (rowIndex >= length || moveTo < 0 || moveTo >= length) return
     var grist = this.dataGrist
     grist._data.records.splice(rowIndex, 1)
-    grist._data.records.splice(rowIndex + steps, 0, record)
+    grist._data.records.splice(moveTo, 0, record)
     grist.dispatchEvent(
       new CustomEvent('record-change', {
         bubbles: true,
         composed: true
+      })
+    )
+    grist.grist.dispatchEvent(
+      new CustomEvent('focus-change', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          row: rowIndex + steps,
+          column: column
+        }
       })
     )
   }
