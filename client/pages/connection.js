@@ -240,8 +240,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
       },
       sorters: [
         {
-          name: 'name',
-          desc: true
+          name: 'name'
         }
       ]
     }
