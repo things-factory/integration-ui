@@ -65,6 +65,15 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   }
 
   async firstUpdated() {
+    this.select = [
+      "name",
+      "description",
+      "sequence",
+      "task",
+      "connection",
+      "params",
+      "skip"
+    ]
     this.gristConfig = {
       list: { fields: ['name', 'description', 'task'] },
       columns: [
@@ -199,13 +208,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
           ) {
             items {
               id
-              name
-              description
-              sequence
-              task
-              connection
-              params
-              skip
+              ${this.select.join('\n')}
             }
             total
           }
@@ -333,13 +336,10 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   _copyRecord(columns, data, column, record, rowIndex) {
     if (rowIndex >= data.records.length) return
     var grist = this.dataGrist
-    var copiedRecord = {
-      name: record.name,
-      description: record.description,
-      task: record.task,
-      connection: record.connection,
-      params: record.params
-    }
+    var copiedRecord = {};
+    this.select.forEach(field => {
+      copiedRecord[field] = record[field]
+    })
     grist._data.records.splice(rowIndex + 1, 0, copiedRecord)
     grist.dispatchEvent(
       new CustomEvent('record-change', {
