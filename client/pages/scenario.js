@@ -299,12 +299,8 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
   async fetchHandler({ page, limit, sorters = [] }) {
     const response = await client.query({
       query: gql`
-        query {
-          responses: scenarios(${gqlBuilder.buildArgs({
-            filters: this._conditionParser(),
-            pagination: { page, limit },
-            sortings: sorters
-          })}) {
+        query($filters: [Filter], $pagination: Pagination, $sortings: [Sorting]) {
+          responses: scenarios(filters: $filters, pagination: $pagination, sortings: $sortings) {
             items {
               id
               domain {
@@ -328,7 +324,12 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
             total
           }
         }
-      `
+      `,
+      variables: {
+        filters: this._conditionParser(),
+        pagination: { page, limit },
+        sortings: sorters
+      }
     })
 
     return {
@@ -361,12 +362,15 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
     if (confirm(i18next.t('text.sure_to_x', { x: i18next.t('text.delete') }))) {
       const ids = this.dataGrist.selected.map(record => record.id)
       if (ids && ids.length > 0) {
-        const response = await client.query({
-          query: gql`
-            mutation {
-              deleteScenarios(${gqlBuilder.buildArgs({ ids })})
+        const response = await client.mutate({
+          mutation: gql`
+            mutation($ids: [String]!) {
+              deleteScenarios(ids: $ids)
             }
-          `
+          `,
+          variables: {
+            ids
+          }
         })
 
         if (!response.errors) {
@@ -427,16 +431,17 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
         return patchField
       })
 
-      const response = await client.query({
-        query: gql`
-            mutation {
-              updateMultipleScenario(${gqlBuilder.buildArgs({
-                patches
-              })}) {
-                name
-              }
+      const response = await client.mutate({
+        mutation: gql`
+          mutation($patches: [ScenarioPatch]!) {
+            updateMultipleScenario(patches: $patches) {
+              name
             }
-          `
+          }
+        `,
+        variables: {
+          patches
+        }
       })
 
       if (!response.errors) this.dataGrist.fetch()

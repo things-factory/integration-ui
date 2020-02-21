@@ -261,12 +261,8 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
   async fetchHandler({ page, limit, sorters = [] }) {
     const response = await client.query({
       query: gql`
-        query {
-          responses: connections(${gqlBuilder.buildArgs({
-            filters: this._conditionParser(),
-            pagination: { page, limit },
-            sortings: sorters
-          })}) {
+        query($filters: [Filter], $pagination: Pagination, $sortings: [Sorting]) {
+          responses: connections(filters: $filters, pagination: $pagination, sortings: $sortings) {
             items {
               id
               domain {
@@ -291,7 +287,12 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
             total
           }
         }
-      `
+      `,
+      variables: {
+        filters: this._conditionParser(),
+        pagination: { page, limit },
+        sortings: sorters
+      }
     })
 
     return {
@@ -303,10 +304,8 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
   async fetchConnector(name) {
     const response = await client.query({
       query: gql`
-        query {
-          connector(${gqlBuilder.buildArgs({
-            name
-          })}) {
+        query($name: String!) {
+          connector(name: $name) {
             name
             description
             parameterSpec {
@@ -318,7 +317,10 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
             }
           }
         }
-      `
+      `,
+      variables: {
+        name
+      }
     })
 
     return response.data.connector
@@ -354,12 +356,15 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
     ) {
       const names = this.dataGrist.selected.map(record => record.name)
       if (names && names.length > 0) {
-        const response = await client.query({
-          query: gql`
-            mutation {
-              deleteConnections(${gqlBuilder.buildArgs({ names })})
+        const response = await client.mutate({
+          mutation: gql`
+            mutation($names: [String]!) {
+              deleteConnections(names: $names)
             }
-          `
+          `,
+          variables: {
+            names
+          }
         })
 
         if (!response.errors) {
@@ -399,16 +404,17 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
         return patchField
       })
 
-      const response = await client.query({
-        query: gql`
-            mutation {
-              updateMultipleConnection(${gqlBuilder.buildArgs({
-                patches
-              })}) {
-                name
-              }
+      const response = await client.mutate({
+        mutation: gql`
+          mutation($patches: [ConnectionPatch]!) {
+            updateMultipleConnection(patches: $patches) {
+              name
             }
-          `
+          }
+        `,
+        variables: {
+          patches
+        }
       })
 
       if (!response.errors) this.dataGrist.fetch()
