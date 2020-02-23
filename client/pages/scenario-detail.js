@@ -150,6 +150,15 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
           width: 80
         },
         {
+          type: 'boolean',
+          name: 'errorBreakMain',
+          header: i18next.t('field.break_main'),
+          record: {
+            editable: true
+          },
+          width: 80
+        },
+        {
           type: 'connection',
           name: 'connection',
           header: i18next.t('field.connection'),
