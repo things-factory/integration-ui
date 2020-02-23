@@ -72,7 +72,8 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
       "task",
       "connection",
       "params",
-      "skip"
+      "skip",
+      "errorBreakMain"
     ]
     this.gristConfig = {
       list: { fields: ['name', 'description', 'task'] },
