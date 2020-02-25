@@ -21,6 +21,7 @@
   "label.day-of-month": "day of month",
   "label.day-of-week": "day of week",
   "label.encoding": "encoding",
+  "label.error-propagation": "error propagation",
   "label.examples": "examples",
   "label.hour": "hour",
   "label.hourly": "hourly",

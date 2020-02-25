@@ -22,6 +22,7 @@
   "label.day-of-month": "날짜",
   "label.day-of-week": "요일",
   "label.encoding": "엔코딩",
+  "label.error-propagation": "에러 전파",
   "label.examples": "예시",
   "label.hour": "시간",
   "label.hourly": "시간단위",

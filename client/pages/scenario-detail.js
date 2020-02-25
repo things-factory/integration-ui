@@ -65,16 +65,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   }
 
   async firstUpdated() {
-    this.select = [
-      "name",
-      "description",
-      "sequence",
-      "task",
-      "connection",
-      "params",
-      "skip",
-      "errorBreakMain"
-    ]
+    this.select = ['name', 'description', 'sequence', 'task', 'connection', 'params', 'skip']
     this.gristConfig = {
       list: { fields: ['name', 'description', 'task'] },
       columns: [
@@ -145,15 +136,6 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
           type: 'boolean',
           name: 'skip',
           header: i18next.t('field.skip'),
-          record: {
-            editable: true
-          },
-          width: 80
-        },
-        {
-          type: 'boolean',
-          name: 'errorBreakMain',
-          header: i18next.t('field.break_main'),
           record: {
             editable: true
           },
@@ -320,7 +302,8 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   }
 
   _moveRecord(steps, columns, data, column, record, rowIndex) {
-    var moveTo = rowIndex + steps, length = data.records.length
+    var moveTo = rowIndex + steps,
+      length = data.records.length
     if (rowIndex >= length || moveTo < 0 || moveTo >= length) return
     var grist = this.dataGrist
     grist._data.records.splice(rowIndex, 1)
@@ -346,7 +329,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   _copyRecord(columns, data, column, record, rowIndex) {
     if (rowIndex >= data.records.length) return
     var grist = this.dataGrist
-    var copiedRecord = {};
+    var copiedRecord = {}
     this.select.forEach(field => {
       copiedRecord[field] = record[field]
     })
