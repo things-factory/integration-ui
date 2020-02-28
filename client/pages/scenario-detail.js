@@ -72,8 +72,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
       "task",
       "connection",
       "params",
-      "skip",
-      "errorBreakMain"
+      "skip"
     ]
     this.gristConfig = {
       list: { fields: ['name', 'description', 'task'] },
@@ -145,15 +144,6 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
           type: 'boolean',
           name: 'skip',
           header: i18next.t('field.skip'),
-          record: {
-            editable: true
-          },
-          width: 80
-        },
-        {
-          type: 'boolean',
-          name: 'errorBreakMain',
-          header: i18next.t('field.break_main'),
           record: {
             editable: true
           },
