@@ -52,8 +52,8 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
         .fetchHandler=${this.fetchHandler.bind(this)}
       ></data-grist>
       <div class="button-container">
-        <mwc-button @click=${this._updateSteps.bind(this)}>${i18next.t('button.save')}</mwc-button>
         <mwc-button @click=${this._deleteSteps.bind(this)}>${i18next.t('button.delete')}</mwc-button>
+        <mwc-button @click=${this._updateSteps.bind(this)}>${i18next.t('button.save')}</mwc-button>
       </div>
     `
   }
