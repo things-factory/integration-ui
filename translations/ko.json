@@ -40,7 +40,7 @@
   "label.monthly": "월간",
   "label.mutation": "뮤테이션 쿼리",
   "label.object-type": "오브젝트 유형",
-  "label.parameters": "parameters",
+  "label.params": "파라미터",
   "label.product-id": "제품 ID.",
   "label.quantity": "수량",
   "label.scenario": "시나리오",

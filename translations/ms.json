@@ -39,7 +39,7 @@
   "label.monthly": "[ms]monthly",
   "label.mutation": "[ms]mutation query",
   "label.object-type": "[ms]object type",
-  "label.parameters": "[ms]parameters",
+  "label.params": "[ms]parameters",
   "label.product-id": "[ms]product ID.",
   "label.quantity": "[ms]quantity",
   "label.scenario": "[ms]scenario",
