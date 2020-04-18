@@ -60,7 +60,7 @@ class ParametersEditorBuilder extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    this.propertyEditor = state.board.editors
+    this.propertyEditor = state.modeller.editors
   }
 
   _onPropsChanged(props) {
