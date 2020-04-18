@@ -5,7 +5,7 @@
 import { LitElement } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin'
 import { store } from '@things-factory/shell'
-import '@things-factory/board-ui/client/board-modeller/editors/things-editor-property'
+import '@things-factory/modeller-ui'
 
 /**
 모든 에디터들은 change 이벤트를 지원해야 한다. 또한, 모든 에디터들은 value속성에 값을 가져야 한다.

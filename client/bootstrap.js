@@ -1,7 +1,7 @@
 import '@material/mwc-icon'
 
 import { store } from '@things-factory/shell'
-import { ADD_BOARD_EDITORS } from '@things-factory/board-ui'
+import { ADD_MODELLER_EDITORS } from '@things-factory/modeller-ui'
 
 import { registerEditor } from '@things-factory/grist-ui'
 
@@ -12,8 +12,8 @@ import { JsonGristEditor } from './grist/json-grist-editor'
 import { ParametersEditor } from './grist/parameters-editor'
 import { CrontabEditor } from './grist/crontab-editor'
 
-import { PropertyEditorHttpHeader, PropertyEditorHttpParameter } from './editors/property-editor'
-import { PropertyEditorEntitySelector } from './editors/entity-editor'
+import './editors/property-editor'
+import './editors/entity-editor'
 
 export default function bootstrap() {
   registerEditor('task-type', TaskTypeSelector)
@@ -24,7 +24,7 @@ export default function bootstrap() {
   registerEditor('crontab', CrontabEditor)
 
   store.dispatch({
-    type: ADD_BOARD_EDITORS,
+    type: ADD_MODELLER_EDITORS,
     editors: {
       'http-headers': 'property-editor-http-header',
       'http-parameters': 'property-editor-http-parameter',

@@ -2,7 +2,7 @@
  * Copyright © HatioLab Inc. All rights reserved.
  */
 import { html, css } from 'lit-element'
-import { ThingsEditorProperty, ThingsEditorPropertyStyles } from '@things-factory/board-ui/client/modeller-module'
+import { ThingsEditorProperty, ThingsEditorPropertyStyles } from '@things-factory/modeller-ui'
 import { deepClone } from '@things-factory/utils'
 
 import './things-editor-entity-selector'
