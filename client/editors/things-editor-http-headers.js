@@ -30,22 +30,20 @@ export default class ThingsEditorHttpHeaders extends LitElement {
           width: 100%;
           overflow: hidden;
           border: 1px solid #ccc;
+          margin: 5px 0;
+
+          background-color: #ddd;
         }
 
         div {
           display: flex;
           flex-flow: row nowrap;
           align-items: center;
-
-          border-bottom: 1px solid #c0c0c0;
-        }
-
-        div:last-child {
-          border-bottom: none;
         }
 
         div > * {
           min-width: 0px;
+          min-height: 20px;
           margin: 2px;
           padding: 0;
         }
@@ -53,6 +51,8 @@ export default class ThingsEditorHttpHeaders extends LitElement {
         button {
           width: 20px;
           text-align: center;
+          border-radius: 50%;
+          font-size: 1em;
         }
 
         input {
