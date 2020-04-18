@@ -4,14 +4,18 @@
 
 import { LitElement, html, css } from 'lit-element'
 
-export default class ThingsEditorHttpHeaders extends LitElement {
-  static get is() {
-    return 'things-editor-http-headers'
-  }
+/**
+http headers editor element
 
+Example:
+
+  <things-editor-http-headers value=${map}>
+  </things-editor-http-headers>
+*/
+export default class ThingsEditorHttpHeaders extends LitElement {
   static get properties() {
     return {
-      values: Array
+      value: Object
     }
   }
 
@@ -19,31 +23,40 @@ export default class ThingsEditorHttpHeaders extends LitElement {
     return [
       css`
         :host {
-          display: inline-block;
-        }
+          display: flex;
+          flex-direction: column;
+          align-content: center;
 
-        #colors-container > div {
-          display: grid;
-          grid-template-columns: 22px 1fr 22px;
-          grid-gap: 5px;
-          align-items: center;
-          justify-content: left;
-        }
-
-        things-editor-color {
-          height: 25px;
           width: 100%;
+          overflow: hidden;
+          border: 1px solid #ccc;
         }
 
-        input[type='button'] {
-          width: 22px;
-          height: 25px;
-          border: 1px solid rgba(0, 0, 0, 0.15);
-          padding-top: 0px;
-          padding-bottom: 2px;
-          background-color: #f1f2f4;
-          color: #8f9192;
-          font-size: 16px;
+        div {
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+
+          border-bottom: 1px solid #c0c0c0;
+        }
+
+        div:last-child {
+          border-bottom: none;
+        }
+
+        div > * {
+          min-width: 0px;
+          margin: 2px;
+          padding: 0;
+        }
+
+        button {
+          width: 20px;
+          text-align: center;
+        }
+
+        input {
+          flex: 1;
         }
       `
     ]
@@ -52,65 +65,118 @@ export default class ThingsEditorHttpHeaders extends LitElement {
   constructor() {
     super()
 
-    this.values = []
+    this.value = {}
   }
 
   firstUpdated() {
-    this.shadowRoot.addEventListener('change', this._onValueChanged.bind(this))
+    this.renderRoot.addEventListener('change', this._onChange.bind(this))
   }
 
-  // TODO style for things-editor-color
   render() {
     return html`
-      <div id="colors-container">
-        ${(this.values || []).map(
-          (item, index) => html`
-            <div>
-              <input type="button" value="+" @click="${e => this._appendEditorColor(e)}" data-index=${index} />
+      ${this._toArray(this.value).map(
+        item => html`
+          <div data-record>
+            <input type="text" data-key placeholder="key" .value=${item.key} />
+            <input type="text" data-value placeholder="value" .value=${item.value} />
+            <button class="record-action" @click=${e => this._delete(e)} tabindex="-1">-</button>
+          </div>
+        `
+      )}
 
-              <things-editor-color .value=${item}> </things-editor-color>
-
-              ${(this.values || []).length > 1
-                ? html`
-                    <input type="button" value="-" @click=${e => this._removeEditorColor(e)} data-index=${index} />
-                  `
-                : html``}
-            </div>
-          `
-        )}
+      <div data-record-new>
+        <input type="text" data-key placeholder="key" value="" />
+        <input type="text" data-value placeholder="value" value="" />
+        <button class="record-action" @click=${e => this._add(e)} tabindex="-1">+</button>
       </div>
     `
   }
 
-  _onValueChanged(e) {
-    this.values = this._getheringValues()
-  }
-
-  _appendEditorColor(e) {
-    this.values = [...this.values, 'black']
-
-    this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true }))
-  }
-
-  _removeEditorColor(e) {
-    var values = []
-    for (var i = 0; i < this.values.length; i++) {
-      if (i == e.target.dataset.index) continue
-      else values.push(this.values[i])
+  _onChange(e) {
+    if (this._changingNow) {
+      return
     }
 
-    this.values = values
+    this._changingNow = true
+
+    var input = e.target
+    var value = input.value
+
+    var div = input.parentElement
+
+    if (div.hasAttribute('data-record')) {
+      var dataList = div.querySelectorAll('[data-value]:not([hidden])')
+      for (var i = 0; i < dataList.length; i++) {
+        if (dataList[i] !== input) {
+          dataList[i].value = value || ''
+        }
+      }
+    }
+
+    if (div.hasAttribute('data-record')) {
+      this._build()
+    } else if (div.hasAttribute('data-record-new') && input.hasAttribute('data-value')) {
+      this._add()
+    }
+
+    this._changingNow = false
+  }
+
+  _build(includeNewRecord) {
+    if (includeNewRecord) var records = this.renderRoot.querySelectorAll('[data-record],[data-record-new]')
+    else var records = this.renderRoot.querySelectorAll('[data-record]')
+
+    var newmap = {}
+
+    for (var i = 0; i < records.length; i++) {
+      var record = records[i]
+
+      var key = record.querySelector('[data-key]').value
+      var inputs = record.querySelectorAll('[data-value]:not([style*="display: none"])')
+      if (!inputs || inputs.length == 0) continue
+
+      var input = inputs[inputs.length - 1]
+
+      var value = input.value
+
+      if (key) newmap[key] = value || ''
+    }
+
+    this.value = newmap
     this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true }))
   }
 
-  _getheringValues() {
-    var colorsContainer = this.shadowRoot.querySelector('#colors-container')
-    var values = []
-    Array.from(colorsContainer.querySelectorAll('things-editor-color')).forEach(c => {
-      values.push(c.value)
-    })
+  /* map아이템들을 template(dom-repeat)용 배열로 변환하는 함수 */
+  _toArray(map) {
+    var array = []
 
-    return values
+    for (var key in map) {
+      array.push({
+        key: key,
+        value: map[key]
+      })
+    }
+
+    return array
+  }
+
+  _add(e) {
+    this._build(true)
+
+    var inputs = this.renderRoot.querySelectorAll('[data-record-new] input:not([style*="display: none"])')
+
+    for (var i = 0; i < inputs.length; i++) {
+      let input = inputs[i]
+      input.value = ''
+    }
+
+    inputs[0].focus()
+  }
+
+  _delete(e) {
+    var record = e.target.parentElement
+    record.querySelector('[data-key]').value = ''
+    this._build()
   }
 }
 

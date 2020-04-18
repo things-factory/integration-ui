@@ -26,8 +26,8 @@ export default function bootstrap() {
   store.dispatch({
     type: ADD_MODELLER_EDITORS,
     editors: {
-      'http-headers': 'property-editor-http-header',
-      'http-parameters': 'property-editor-http-parameter',
+      'http-headers': 'property-editor-http-headers',
+      'http-parameters': 'property-editor-http-parameters',
       'entity-selector': 'property-editor-entity-selector'
     }
   })
