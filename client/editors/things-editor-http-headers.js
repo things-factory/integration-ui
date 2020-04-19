@@ -79,7 +79,7 @@ export default class ThingsEditorHttpHeaders extends LitElement {
           <div data-record>
             <input type="text" data-key placeholder="key" .value=${item.key} />
             <input type="text" data-value placeholder="value" .value=${item.value} />
-            <button class="record-action" @click=${e => this._delete(e)} tabindex="-1">-</button>
+            <button class="record-action" @click=${e => this._delete(e)} tabindex="-1">x</button>
           </div>
         `
       )}

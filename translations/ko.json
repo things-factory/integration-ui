@@ -17,6 +17,7 @@
   "field.type": "분류",
   "label.address": "주소",
   "label.authtype": "인증 유형",
+  "label.body": "body",
   "label.cases": "cases",
   "label.clear": "비우기",
   "label.confirm": "확인",

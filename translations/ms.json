@@ -16,6 +16,7 @@
   "field.type": "[ms]type",
   "label.address": "[ms]address",
   "label.authtype": "[ms]auth-type",
+  "label.body": "[ms]body",
   "label.cases": "[ms]cases",
   "label.clear": "[ms]clear",
   "label.confirm": "[ms]confirm",

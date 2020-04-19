@@ -28,6 +28,7 @@ export default function bootstrap() {
     editors: {
       'http-headers': 'property-editor-http-headers',
       'http-parameters': 'property-editor-http-parameters',
+      'http-body': 'property-editor-http-body',
       'entity-selector': 'property-editor-entity-selector'
     }
   })
