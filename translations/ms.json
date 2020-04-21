@@ -45,6 +45,7 @@
   "label.quantity": "[ms]quantity",
   "label.scenario": "[ms]scenario",
   "label.script": "[ms]script",
+  "label.search-params": "[ms]search params",
   "label.second by second": "[ms]second by second",
   "label.second": "[ms]second",
   "label.timeout": "[ms]timeout",

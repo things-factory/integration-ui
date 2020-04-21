@@ -66,14 +66,14 @@ export default class ThingsEditorHttpBody extends LitElement {
   }
 
   render() {
-    var { kind = 'none', accessor = '' } = this.value || {}
+    var { kind = 'none', accessor = '', contentType } = this.value || {}
 
     return html`
       <div kind>
         <input type="radio" id="none" name="kind" .checked=${kind == 'none'} value="none" />
         <label for="none">none</label>
 
-        <input type="radio" id="form-data" name="kind" .checked=${kind == 'form-data'} value="form-data" />
+        <input type="radio" id="form-data" name="kind" .checked=${kind == 'form-data'} value="form-data" disabled />
         <label for="form-data">form-data</label>
 
         <input
@@ -97,12 +97,28 @@ export default class ThingsEditorHttpBody extends LitElement {
 
       ${kind !== 'none'
         ? html`
+            ${kind == 'raw' ? this.renderContentType(contentType) : html``}
             <div accessor>
               <label for="accessor">accessor</label>
               <input type="text" id="accessor" name="accessor" placeholder="accessor" .value=${accessor} />
             </div>
           `
         : html``}
+    `
+  }
+
+  renderContentType(contentType) {
+    return html`
+      <div>
+        <label>content-type</label>
+        <div>
+          <input type="radio" id="text" name="contentType" .checked=${contentType == 'text'} value="text" />
+          <label for="text">Text</label>
+
+          <input type="radio" id="json" name="contentType" .checked=${contentType == 'json'} value="json" disabled />
+          <label for="json">Json</label>
+        </div>
+      </div>
     `
   }
 
@@ -116,30 +132,6 @@ export default class ThingsEditorHttpBody extends LitElement {
 
     this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true }))
   }
-
-  // _build(includeNewRecord) {
-  //   if (includeNewRecord) var records = this.renderRoot.querySelectorAll('[data-record],[data-record-new]')
-  //   else var records = this.renderRoot.querySelectorAll('[data-record]')
-
-  //   var newmap = {}
-
-  //   for (var i = 0; i < records.length; i++) {
-  //     var record = records[i]
-
-  //     var key = record.querySelector('[data-key]').value
-  //     var inputs = record.querySelectorAll('[data-value]:not([style*="display: none"])')
-  //     if (!inputs || inputs.length == 0) continue
-
-  //     var input = inputs[inputs.length - 1]
-
-  //     var value = input.value
-
-  //     if (key) newmap[key] = value || ''
-  //   }
-
-  //   this.value = newmap
-  //   this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true }))
-  // }
 }
 
 customElements.define('things-editor-http-body', ThingsEditorHttpBody)

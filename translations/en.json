@@ -45,6 +45,7 @@
   "label.quantity": "quantity",
   "label.scenario": "scenario",
   "label.script": "script",
+  "label.search-params": "search params",
   "label.second by second": "second by second",
   "label.second": "second",
   "label.timeout": "timeout",
