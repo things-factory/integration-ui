@@ -51,7 +51,7 @@ export default function bootstrap() {
       name: html` <i18n-msg msgid="text.modeller"></i18n-msg> `,
       position: 'REAR_END',
       action: async () => {
-        window.open('/integration-modeller', 'integration_modeller')
+        window.open('/integration/modeller', 'integration_modeller')
       }
     }
   })
