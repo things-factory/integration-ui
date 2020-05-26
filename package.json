@@ -28,15 +28,12 @@
     "migration:revert": "node ./node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
-    "@things-factory/integration-base": "^2.3.0-beta.1",
+    "@things-factory/integration-base": "^2.3.0",
     "@things-factory/modeller-ui": "^2.0.2",
     "moment-timezone": "^0.5.27",
     "subscriptions-transport-ws": "^0.9.16"
   },
   "devDependencies": {
     "@things-factory/operato-ecs": "^2.0.0"
-  },
-  "resolutions": {
-    "@things-factory/auth-base": "^2.5.0-beta.5"
   }
 }
