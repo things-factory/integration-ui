@@ -10,7 +10,6 @@ import { CrontabEditor } from './grist/crontab-editor'
 import { JsonGristEditor } from './grist/json-grist-editor'
 import { ParametersEditor } from './grist/parameters-editor'
 import { TaskTypeSelector } from './grist/task-type-selector'
-import './viewparts/modeller-url-setting-let'
 
 export default function bootstrap() {
   registerEditor('task-type', TaskTypeSelector)
