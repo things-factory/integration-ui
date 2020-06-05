@@ -65,15 +65,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   }
 
   async firstUpdated() {
-    this.select = [
-      "name",
-      "description",
-      "sequence",
-      "task",
-      "connection",
-      "params",
-      "skip"
-    ]
+    this.select = ['name', 'description', 'sequence', 'task', 'connection', 'params', 'skip']
     this.gristConfig = {
       list: { fields: ['name', 'description', 'task'] },
       columns: [
@@ -132,15 +124,6 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
           width: 180
         },
         {
-          type: 'task-type',
-          name: 'task',
-          header: i18next.t('field.task'),
-          record: {
-            editable: true
-          },
-          width: 120
-        },
-        {
           type: 'boolean',
           name: 'skip',
           header: i18next.t('field.skip'),
@@ -157,6 +140,19 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
             editable: true
           },
           width: 160
+        },
+        {
+          type: 'task-type',
+          name: 'task',
+          header: i18next.t('field.task'),
+          record: {
+            editable: true,
+            connectionName: async (value, column, record, row, field) => {
+              /* return connectionName */
+              return record.connection
+            }
+          },
+          width: 120
         },
         {
           type: 'parameters',
@@ -310,7 +306,8 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   }
 
   _moveRecord(steps, columns, data, column, record, rowIndex) {
-    var moveTo = rowIndex + steps, length = data.records.length
+    var moveTo = rowIndex + steps,
+      length = data.records.length
     if (rowIndex >= length || moveTo < 0 || moveTo >= length) return
     var grist = this.dataGrist
     grist._data.records.splice(rowIndex, 1)
@@ -336,7 +333,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   _copyRecord(columns, data, column, record, rowIndex) {
     if (rowIndex >= data.records.length) return
     var grist = this.dataGrist
-    var copiedRecord = {};
+    var copiedRecord = {}
     this.select.forEach(field => {
       copiedRecord[field] = record[field]
     })
