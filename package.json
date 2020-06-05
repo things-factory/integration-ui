@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/integration-ui",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
@@ -28,8 +28,8 @@
     "migration:revert": "node ./node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
-    "@things-factory/integration-base": "^2.3.0",
-    "@things-factory/modeller-ui": "^2.0.2",
+    "@things-factory/integration-base": "^2.0.0",
+    "@things-factory/modeller-ui": "^2.0.0",
     "moment-timezone": "^0.5.27",
     "subscriptions-transport-ws": "^0.9.16"
   },
