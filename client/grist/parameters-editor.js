@@ -96,7 +96,7 @@ export class ParametersEditor extends LitElement {
     this.popup = openPopup(template, {
       backdrop: true,
       size: 'large',
-      title: i18next.t('label.parameters')
+      title: i18next.t('field.params')
     })
   }
 }
