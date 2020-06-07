@@ -1,5 +1,5 @@
 import '@material/mwc-icon'
-import { registerEditor } from '@things-factory/grist-ui'
+import { registerEditor as registerGristEditor } from '@things-factory/grist-ui'
 import { ADD_MODELLER_EDITORS } from '@things-factory/modeller-ui'
 import { store } from '@things-factory/shell'
 import './editors/entity-editor'
@@ -12,12 +12,12 @@ import { ParametersEditor } from './grist/parameters-editor'
 import { TaskTypeSelector } from './grist/task-type-selector'
 
 export default function bootstrap() {
-  registerEditor('task-type', TaskTypeSelector)
-  registerEditor('connector', ConnectorSelector)
-  registerEditor('connection', ConnectionSelector)
-  registerEditor('json', JsonGristEditor)
-  registerEditor('parameters', ParametersEditor)
-  registerEditor('crontab', CrontabEditor)
+  registerGristEditor('task-type', TaskTypeSelector)
+  registerGristEditor('connector', ConnectorSelector)
+  registerGristEditor('connection', ConnectionSelector)
+  registerGristEditor('json', JsonGristEditor)
+  registerGristEditor('parameters', ParametersEditor)
+  registerGristEditor('crontab', CrontabEditor)
 
   store.dispatch({
     type: ADD_MODELLER_EDITORS,

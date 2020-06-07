@@ -3,6 +3,7 @@
  */
 
 import { css, html, LitElement } from 'lit-element'
+import { i18next } from '@things-factory/i18n-base'
 import { openPopup } from '@things-factory/layout-base'
 import './parameters-editor-builder'
 import './parameters-editor-popup'
@@ -32,9 +33,7 @@ export class ParametersEditor extends LitElement {
   }
 
   render() {
-    return html`
-      ${this.value || ''}
-    `
+    return html` ${this.value || ''} `
   }
 
   async firstUpdated() {
@@ -97,7 +96,7 @@ export class ParametersEditor extends LitElement {
     this.popup = openPopup(template, {
       backdrop: true,
       size: 'large',
-      title: 'options'
+      title: i18next.t('label.parameters')
     })
   }
 }

@@ -2,7 +2,6 @@ import { html } from 'lit-element'
 import gql from 'graphql-tag'
 
 import { client } from '@things-factory/shell'
-import { DynamicSelector } from './dynamic-selector'
 import { InputEditor } from '@things-factory/grist-ui'
 
 const FETCH_TASK_TYPES_GQL = gql`
@@ -15,7 +14,7 @@ const FETCH_TASK_TYPES_GQL = gql`
   }
 `
 
-const EMPTY_OPTION = [{ name: '', value: '' }]
+const EMPTY_OPTION = { name: '', value: '' }
 
 export class TaskTypeSelector extends InputEditor {
   async getOptions() {
@@ -42,7 +41,7 @@ export class TaskTypeSelector extends InputEditor {
     if (options.unshift) {
       options.unshift(EMPTY_OPTION)
     } else {
-      options = EMPTY_OPTION
+      options = [EMPTY_OPTION]
     }
 
     this.options = options
@@ -50,7 +49,7 @@ export class TaskTypeSelector extends InputEditor {
   }
 
   get editorTemplate() {
-    var options = this.options || []
+    var options = this.options || [EMPTY_OPTION]
 
     return html`
       <select>
