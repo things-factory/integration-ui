@@ -1,4 +1,5 @@
 import { i18next } from '@things-factory/i18n-base'
+import { ScrollbarStyles } from '@things-factory/styles'
 import { css, html, LitElement } from 'lit-element'
 
 export class ParametersEditorPopup extends LitElement {
@@ -12,6 +13,7 @@ export class ParametersEditorPopup extends LitElement {
 
   static get styles() {
     return [
+      ScrollbarStyles,
       css`
         :host {
           display: flex;
@@ -25,6 +27,7 @@ export class ParametersEditorPopup extends LitElement {
 
         parameters-editor-builder {
           flex: 1;
+          overflow-y: auto;
         }
 
         span {
@@ -64,9 +67,7 @@ export class ParametersEditorPopup extends LitElement {
             >
             </parameters-editor-builder>
           `
-        : html`
-            <span><i18n-msg msgid="text.no properties to set"></i18n-msg></span>
-          `}
+        : html` <span><i18n-msg msgid="text.no properties to set"></i18n-msg></span> `}
 
       <div class="button-container">
         <mwc-button @click=${this.oncancel.bind(this)}>${i18next.t('button.cancel')}</mwc-button>
