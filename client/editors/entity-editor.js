@@ -1,51 +1,99 @@
-/*
- * Copyright © HatioLab Inc. All rights reserved.
+/**
+ * @license Copyright © HatioLab Inc. All rights reserved.
  */
-import { html, css } from 'lit-element'
-import { ThingsEditorProperty, ThingsEditorPropertyStyles } from '@things-factory/modeller-ui'
-import { deepClone } from '@things-factory/utils'
 
-import './things-editor-entity-selector'
+import { LitElement, html, css } from 'lit-element'
+import '@material/mwc-icon'
 
-export class PropertyEditorEntitySelector extends ThingsEditorProperty {
-  static get styles() {
-    return [ThingsEditorPropertyStyles]
+import { openPopup } from '@things-factory/layout-base'
+import { i18next } from '@things-factory/i18n-base'
+
+import './entity-selector'
+
+export default class ThingsEditorEntitySelector extends LitElement {
+  static get properties() {
+    return {
+      value: String,
+      properties: Object
+    }
   }
 
-  editorTemplate(props) {
+  static get styles() {
+    return [
+      css`
+        :host {
+          position: relative;
+          display: inline-block;
+        }
+
+        input[type='text'] {
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+        }
+
+        mwc-icon {
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+      `
+    ]
+  }
+
+  render() {
     return html`
-      <things-editor-entity-selector
-        id="editor"
-        .value=${props.value}
-        .properties=${props.property}
-      ></things-editor-entity-selector>
+      <input id="text" type="text" .value=${this.value || ''} @change=${e => this._onInputChanged(e)} />
+
+      <mwc-icon @click=${e => this.openSelector(e)}>dashboard</mwc-icon>
     `
   }
 
-  shouldUpdate(changedProperties) {
-    return true
-  }
-
-  get valueProperty() {
-    return 'value'
-  }
-
-  _computeLabelId(label) {
-    if (label.indexOf('label.') >= 0) return label
-
-    return 'label.' + label
-  }
-
-  _valueChanged(e) {
+  _onInputChanged(e) {
     e.stopPropagation()
 
-    this.value = deepClone(e.target[this.valueProperty])
+    this.value = e.target.value
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        bubbles: true,
+        composed: true
+      })
+    )
+  }
 
-    this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true }))
+  openSelector() {
+    if (this.popup) {
+      delete this.popup
+    }
 
-    if (!this.observe) return
-    this.observe.call(this, this.value)
+    var template = html`
+      <entity-selector
+        .creatable=${true}
+        .queryName=${this.properties.queryName}
+        @entity-selected=${e => {
+          e.stopPropagation()
+
+          var entity = e.detail.entity
+          this.value = entity[this.properties.valueKey || 'id']
+
+          this.dispatchEvent(
+            new CustomEvent('change', {
+              bubbles: true,
+              composed: true
+            })
+          )
+
+          this.popup && this.popup.close()
+        }}
+      ></entity-selector>
+    `
+
+    this.popup = openPopup(template, {
+      backdrop: true,
+      size: 'large',
+      title: i18next.t('title.select entity')
+    })
   }
 }
 
-customElements.define('property-editor-entity-selector', PropertyEditorEntitySelector)
+customElements.define('things-editor-entity-selector', ThingsEditorEntitySelector)
