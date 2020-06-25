@@ -74,7 +74,7 @@ export default class ThingsEditorEntitySelector extends LitElement {
           e.stopPropagation()
 
           var entity = e.detail.entity
-          this.value = entity.id
+          this.value = entity[this.properties.valueKey || 'id']
 
           this.dispatchEvent(
             new CustomEvent('change', {
