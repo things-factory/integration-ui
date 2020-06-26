@@ -89,7 +89,12 @@ export class ParametersEditor extends LitElement {
       따라서, 가급적 이들 속성의 레퍼런스를 변화시키지 않는 것이 좋다.
     */
     var template = html`
-      <parameters-editor-popup .value=${value} .props=${options} .confirmCallback=${confirmCallback}>
+      <parameters-editor-popup
+        .value=${value}
+        .props=${options}
+        .host=${this.record}
+        .confirmCallback=${confirmCallback}
+      >
       </parameters-editor-popup>
     `
 

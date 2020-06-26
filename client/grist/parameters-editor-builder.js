@@ -46,6 +46,7 @@ class ParametersEditorBuilder extends connect(store)(LitElement) {
     return {
       value: Object,
       props: Array,
+      host: Object,
       propertyEditor: Object
     }
   }
@@ -76,6 +77,7 @@ class ParametersEditorBuilder extends connect(store)(LitElement) {
       element.label = prop.label
       element.type = prop.type
       element.placeholder = prop.placeholder
+      element.host = this.host
       element.setAttribute('name', prop.name)
 
       if (prop.observe) {

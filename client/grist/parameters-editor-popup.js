@@ -7,6 +7,7 @@ export class ParametersEditorPopup extends LitElement {
     return {
       value: Object,
       props: Object,
+      host: Object,
       confirmCallback: Object
     }
   }
@@ -63,6 +64,7 @@ export class ParametersEditorPopup extends LitElement {
             <parameters-editor-builder
               .value=${this.value}
               .props=${props}
+              .host=${this.host}
               @property-change=${this.onchange.bind(this)}
             >
             </parameters-editor-builder>
