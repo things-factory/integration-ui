@@ -159,7 +159,7 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
                 new CustomEvent('notify', {
                   detail: {
                     level: 'warn',
-                    message: 'cannot change connection name during connected'
+                    message: 'connection name cannot be changed during connected.'
                   }
                 })
               )

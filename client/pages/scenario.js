@@ -175,7 +175,7 @@ export class Scenario extends connect(store)(localize(i18next)(PageView)) {
                 new CustomEvent('notify', {
                   detail: {
                     level: 'warn',
-                    message: 'cannot change scenario name during executing'
+                    message: 'scenario name cannot be changed during execution.'
                   }
                 })
               )
