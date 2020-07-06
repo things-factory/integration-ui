@@ -151,7 +151,22 @@ export class Connection extends connect(store)(localize(i18next)(PageView)) {
             editable: true
           },
           sortable: true,
-          width: 150
+          width: 150,
+          validation: function (after, before, record, column) {
+            /* connected 상태에서는 이름을 바꿀 수 없다. */
+            if (record.status) {
+              document.dispatchEvent(
+                new CustomEvent('notify', {
+                  detail: {
+                    level: 'warn',
+                    message: 'cannot change connection name during connected'
+                  }
+                })
+              )
+              return false
+            }
+            return true
+          }
         },
         {
           type: 'string',
