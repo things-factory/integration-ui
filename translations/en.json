@@ -14,6 +14,7 @@
   "field.skip": "skip",
   "field.task": "task",
   "field.type": "type",
+  "field.log": "log",
   "label.address": "address",
   "label.authtype": "auth-type",
   "label.body": "body",

@@ -65,7 +65,7 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
   }
 
   async firstUpdated() {
-    this.select = ['name', 'description', 'sequence', 'task', 'connection', 'params', 'skip']
+    this.select = ['name', 'description', 'sequence', 'task', 'connection', 'params', 'skip', 'log']
     this.gristConfig = {
       list: { fields: ['name', 'description', 'task'] },
       columns: [
@@ -127,6 +127,15 @@ class ScenarioDetail extends localize(i18next)(LitElement) {
           type: 'boolean',
           name: 'skip',
           header: i18next.t('field.skip'),
+          record: {
+            editable: true
+          },
+          width: 80
+        },
+        {
+          type: 'boolean',
+          name: 'log',
+          header: i18next.t('field.log'),
           record: {
             editable: true
           },
