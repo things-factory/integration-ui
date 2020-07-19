@@ -1,5 +1,6 @@
 {
   "button.copy": "copy",
+  "button.delete": "delete",
   "button.start monitor": "start monitor",
   "button.stop monitor": "stop monitor",
   "field.api_url": "API URL",

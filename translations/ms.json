@@ -1,5 +1,6 @@
 {
   "button.copy": "salin",
+  "button.delete": "hapuskan",
   "button.start monitor": "mula pantau",
   "button.stop monitor": "henti pantau",
   "field.api_url": "API URL",

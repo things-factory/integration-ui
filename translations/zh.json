@@ -1,5 +1,6 @@
 {
   "button.copy": "复制",
+  "button.delete": "删除",
   "button.start monitor": "启动监视器",
   "button.stop monitor": "停止监视器",
   "field.api_url": "API URL",

@@ -1,5 +1,6 @@
 {
   "button.copy": "복사",
+  "button.delete": "삭제",
   "button.start monitor": "모니터링 시작",
   "button.stop monitor": "모니터링 종료",
   "field.api_url": "API URL",
